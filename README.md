@@ -1,0 +1,1 @@
+I established the "myFlix-client" repository and set up Parcel for my latest application.
