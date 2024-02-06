@@ -1,11 +1,11 @@
-export const BookCard = ({ book, onBookClick }) => {
-    return (
-      <div
-        onClick={() => {
-          onBookClick(book);
-        }}
-      >
-        {book.title}
-      </div>
-    );
-  };
+export const BookCard = ({ book, onClick }) => {
+  return (
+    <div
+      onClick={() => {
+        onClick(book);
+      }}
+    >
+      {book.title}
+    </div>
+  );
+};
