@@ -3,7 +3,7 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
-  const [books, movieBooks] = useState([]);
+  const [movieBooks, setMovieBooks] = useState([]);
 
   useEffect(() => {
     fetch('https://movieflix-87lf.onrender.com')
@@ -29,7 +29,7 @@ export const MainView = () => {
             featured: movie.featured,
           };
         });
-        setMovie(moviesFromApi);
+        setMovieBooks(moviesFromApi);
       });
   }, []);
   
@@ -38,30 +38,30 @@ export const MainView = () => {
 
   if (selectedMovie) {
     return (
-      <MovieView book={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+      <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
     );
   }
 
-if (movie.length === 0) {
-  return <div>The list is empty!</div>;
-}
+  if (movieBooks.length === 0) {
+    return <div>The list is empty!</div>;
+  }
 
-if (movie.length === 1) {
-  return <div>Only one more book left!</div>;
-}
+  if (movieBooks.length === 1) {
+    return <div>Only one more movie left!</div>;
+  }
 
-return (
-  <div>
-    {movie.map((movie) => (
-      <MovieCard
-        key={bmovie.id}
-        movie={movie}
-        onMovieClick={(newSelectedMovie) => {
-          setSelectedMovie(newSelectedMovie);
-        }}
-      />
-    ))}
-  </div>
-);
+  return (
+    <div>
+      {movieBooks.map((movie) => (
+        <MovieCard
+          key={movie.id}
+          movie={movie}
+          onMovieClick={(newSelectedMovie) => {
+            setSelectedMovie(newSelectedMovie);
+          }}
+        />
+      ))}
+    </div>
+  );
 };
 
