@@ -27172,6 +27172,7 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "MainView", ()=>MainView);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
 var _movieCard = require("../movie-card/movie-card");
 var _movieView = require("../movie-view/movie-view");
 var _s = $RefreshSig$();
@@ -27179,7 +27180,10 @@ const MainView = ()=>{
     _s();
     const [movieBooks, setMovieBooks] = (0, _react.useState)([]);
     (0, _react.useEffect)(()=>{
-        fetch("https://movieflix-87lf.onrender.com").then((response)=>response.json()).then((data)=>{
+        fetch("https://movieflix-87lf.onrender.com").then((response)=>{
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            return response.json();
+        }).then((data)=>{
             const moviesFromApi = data.map((movie)=>{
                 return {
                     id: movie.id,
@@ -27201,6 +27205,8 @@ const MainView = ()=>{
                 };
             });
             setMovieBooks(moviesFromApi);
+        }).catch((error)=>{
+            console.error("Fetch error:", error);
         });
     }, []);
     const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
@@ -27209,21 +27215,21 @@ const MainView = ()=>{
         onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 41,
+        lineNumber: 48,
         columnNumber: 7
     }, undefined);
     if (movieBooks.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "The list is empty!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 46,
+        lineNumber: 53,
         columnNumber: 12
     }, undefined);
     if (movieBooks.length === 1) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "Only one more movie left!"
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 50,
+        lineNumber: 57,
         columnNumber: 12
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27234,12 +27240,12 @@ const MainView = ()=>{
                 }
             }, movie.id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 56,
+                lineNumber: 63,
                 columnNumber: 9
             }, undefined))
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 54,
+        lineNumber: 61,
         columnNumber: 5
     }, undefined);
 };

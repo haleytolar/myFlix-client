@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 
@@ -7,7 +7,12 @@ export const MainView = () => {
 
   useEffect(() => {
     fetch('https://movieflix-87lf.onrender.com')
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then((data) => {
         const moviesFromApi = data.map((movie) => {
           return {
@@ -30,9 +35,11 @@ export const MainView = () => {
           };
         });
         setMovieBooks(moviesFromApi);
+      })
+      .catch((error) => {
+        console.error('Fetch error:', error);
       });
   }, []);
-  
 
   const [selectedMovie, setSelectedMovie] = useState(null);
 
@@ -64,4 +71,3 @@ export const MainView = () => {
     </div>
   );
 };
-
