@@ -4,6 +4,7 @@ import { MovieView } from "../movie-view/movie-view";
 
 export const MainView = () => {
   const [movieBooks, setMovieBooks] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
     fetch('https://movieflix-87lf.onrender.com/movies')
@@ -41,11 +42,27 @@ export const MainView = () => {
       });
   }, []);
 
-  const [selectedMovie, setSelectedMovie] = useState(null);
-
   if (selectedMovie) {
+    let genre = selectedMovie.genre.genreName;
+
+    // Filter movies by genre
+    let similarMovies = movieBooks.filter((movie) => movie.genre.genreName === genre);
+
     return (
-      <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+      <>
+        <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+        <hr />
+        <h2>Similar Movies</h2>
+        {similarMovies.map((movie) => (
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            onMovieClick={(newSelectedMovie) => {
+              setSelectedMovie(newSelectedMovie);
+            }}
+          />
+        ))}
+      </>
     );
   }
 
