@@ -6,7 +6,7 @@ export const MainView = () => {
   const [movieBooks, setMovieBooks] = useState([]);
 
   useEffect(() => {
-    fetch('https://movieflix-87lf.onrender.com')
+    fetch('https://movieflix-87lf.onrender.com/movies')
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

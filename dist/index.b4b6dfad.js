@@ -27180,7 +27180,7 @@ const MainView = ()=>{
     _s();
     const [movieBooks, setMovieBooks] = (0, _react.useState)([]);
     (0, _react.useEffect)(()=>{
-        fetch("https://movieflix-87lf.onrender.com").then((response)=>{
+        fetch("https://movieflix-87lf.onrender.com/movies").then((response)=>{
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             return response.json();
         }).then((data)=>{
