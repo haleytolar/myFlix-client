@@ -1,8 +1,9 @@
 // Here you import the PropTypes library
+
 import PropTypes from "prop-types";
 
 // The BookCard function component
-export const MovieCard = ({ book, onMovieClick }) => {
+export const MovieCard = ({ movie, onMovieClick }) => {
   return (
     <div
       onClick={() => {

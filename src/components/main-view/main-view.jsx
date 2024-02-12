@@ -7,7 +7,7 @@ export const MainView = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
-    fetch('https://movieflix-87lf.onrender.com/movies')
+    fetch("https://movieflix-87lf.onrender.com/movies")
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -15,42 +15,47 @@ export const MainView = () => {
         return response.json();
       })
       .then((data) => {
+        console.log(data);
         const moviesFromApi = data.map((movie) => {
           return {
-            id: movie.id,
-            title: movie.title,
-            imagePath: movie.imagePath,
-            description: movie.description,
-            releaseDate: movie.releaseDate,
+            id: movie._id,
+            title: movie.Title,
+            imagePath: movie.ImagePath,
+            description: movie.Description,
             genre: {
-              genreName: movie.genre.genreName,
-              genreDescription: movie.genre.genreDescription,
+              genreName: movie.Genre.Name,
+              genreDescription: movie.Description,
             },
             director: {
-              directorName: movie.director.directorName,
-              bio: movie.director.bio,
-              birth: movie.director.birth,
-              death: movie.director.death,
+              directorName: movie.Director.Name,
+              bio: movie.Director.Bio,
+              birth: movie.Director.Birth,
+              death: movie.Director.Death,
             },
-            featured: movie.featured,
+            // featured: movie.featured,
           };
         });
         setMovieBooks(moviesFromApi);
       })
       .catch((error) => {
-        console.error('Fetch error:', error);
+        console.error("Fetch error:", error);
       });
   }, []);
-
+  console.log("movieBooks", movieBooks);
   if (selectedMovie) {
     let genre = selectedMovie.genre.genreName;
 
     // Filter movies by genre
-    let similarMovies = movieBooks.filter((movie) => movie.genre.genreName === genre);
+    let similarMovies = movieBooks.filter(
+      (movie) => movie.genre.genreName === genre
+    );
 
     return (
       <>
-        <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+        <MovieView
+          movie={selectedMovie}
+          onBackClick={() => setSelectedMovie(null)}
+        />
         <hr />
         <h2>Similar Movies</h2>
         {similarMovies.map((movie) => (
