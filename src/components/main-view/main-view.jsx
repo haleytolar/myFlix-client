@@ -3,6 +3,8 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import Row from "react-bootstrap/Row";
+import Col from 'react-bootstrap/Col';
 
 export const MainView = () => {
     const [movieBooks, setMovieBooks] = useState([]);
@@ -54,15 +56,19 @@ export const MainView = () => {
 
   if (!user) {
     return (
-      <>
-        <LoginView onLoggedIn={(user, token) => {
-          setUser(user);
-          setToken(token);
-        }} />
-        or
-        <SignupView />
-      </>
-    );
+      <Row>
+          <>
+          <Col md={5}>
+          <LoginView onLoggedIn={(user, token) => {
+            setUser(user);
+            setToken(token);
+          }} />
+          or
+          <SignupView />
+          </Col>
+        </>
+      </Row>
+    )
   }
 
   console.log("movieBooks", movieBooks);
@@ -75,13 +81,19 @@ export const MainView = () => {
     );
 
     return (
-      <>
-        <MovieView
-          movie={selectedMovie}
-          onBackClick={() => setSelectedMovie(null)}
-        />
+      <div>
+        <Row className="justify-content-md-center">
+          <Col md={10} style={{ border: "1px solid black" }}>
+            <MovieView
+              movie={selectedMovie}
+              onBackClick={() => setSelectedMovie(null)}
+            />
+          </Col>
+        </Row>
         <hr />
         <h2>Similar Movies</h2>
+        <Row>
+          <Col className="mb-5" md={3}>
         {similarMovies.map((movie) => (
           <MovieCard
             key={movie.id}
@@ -91,30 +103,33 @@ export const MainView = () => {
             }}
           />
         ))}
-      </>
-    );
+        </Col>
+        </Row>
+      </div>
+    );    
   }
 
   if (movieBooks.length === 0) {
-    return <div>The list is empty!</div>;
+    return <Col>The list is empty!</Col>;
   }
 
   if (movieBooks.length === 1) {
-    return <div>Only one more movie left!</div>;
+    return <Col>Only one more movie left!</Col>;
   }
   return (
-    <div>
+    <Row>
       {movieBooks.map((movie) => (
-        <div key={movie.id}>
+         <Col className="mb-5" key={movie.id} md={3}>
           <MovieCard
             movie={movie}
             onMovieClick={(newSelectedMovie) => {
               setSelectedMovie(newSelectedMovie);
             }}
           />
-        </div>
+        </Col>
       ))}
       <button
+       className="back-button"  
         onClick={() => {
           setUser(null);
           setToken(null);
@@ -123,5 +138,5 @@ export const MainView = () => {
       >
         Logout
       </button>
-    </div>
+    </Row>
   )}
