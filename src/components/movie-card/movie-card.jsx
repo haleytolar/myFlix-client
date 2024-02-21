@@ -6,18 +6,22 @@ import { Button, Card } from "react-bootstrap";
 // The MovieCard function component
 export const MovieCard = ({ movie, onMovieClick }) => {
   return (
-    <Card className="h-100">
-      <Card.Img variant="top" src={movie.imagePath} />
-      <Card.Body>
-        <Card.Title>{movie.title}</Card.Title>
-        <Card.Text>{movie.director.directorName}</Card.Text>
-        <Card onClick={() => onMovieClick(movie)} variant="link">
-          Open
-        </Card>
-      </Card.Body>
-    </Card>
+    <div className="h-100" onClick={() => onMovieClick(movie)} style={{ cursor: 'pointer' }}>
+      <Card style={{ backgroundColor: 'white', border: '4px solid white' }}>
+        <Card.Img variant="top" src={movie.imagePath} />
+        <Card.Body>
+          <Card.Title>{movie.title}</Card.Title>
+          <Card.Text>{movie.director.directorName}</Card.Text>
+        </Card.Body>
+      </Card>
+    </div>
   );
 };
+
+
+
+
+
 
 // Here is where we define all the props constraints for the BookCard
 MovieCard.propTypes = {
@@ -28,3 +32,4 @@ MovieCard.propTypes = {
   }).isRequired,
   onMovieClick: PropTypes.func.isRequired,
 };
+

@@ -3,8 +3,8 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
-import Row from "react-bootstrap/Row";
-import Col from 'react-bootstrap/Col';
+import { Button, Col, Container, Nav, Row } from "react-bootstrap";
+
 
 export const MainView = () => {
     const [movieBooks, setMovieBooks] = useState([]);
@@ -71,72 +71,75 @@ export const MainView = () => {
     )
   }
 
+
   console.log("movieBooks", movieBooks);
-  if (selectedMovie) {
-    let genre = selectedMovie.genre.genreName;
+if (selectedMovie) {
+  let genre = selectedMovie.genre.genreName;
 
-    // Filter movies by genre
-    let similarMovies = movieBooks.filter(
-      (movie) => movie.genre.genreName === genre
-    );
+  // Filter movies by genre
+  let similarMovies = movieBooks.filter(
+    (movie) => movie.genre.genreName === genre
+  );
 
-    return (
-      <div>
-        <Row className="justify-content-md-center">
-          <Col md={10} style={{ border: "1px solid black" }}>
-            <MovieView
-              movie={selectedMovie}
-              onBackClick={() => setSelectedMovie(null)}
-            />
-          </Col>
-        </Row>
-        <hr />
-        <h2>Similar Movies</h2>
-        <Row>
-          <Col className="mb-5" md={3}>
-        {similarMovies.map((movie) => (
-          <MovieCard
-            key={movie.id}
-            movie={movie}
-            onMovieClick={(newSelectedMovie) => {
-              setSelectedMovie(newSelectedMovie);
-            }}
-          />
-        ))}
-        </Col>
-        </Row>
-      </div>
-    );    
-  }
-
-  if (movieBooks.length === 0) {
-    return <Col>The list is empty!</Col>;
-  }
-
-  if (movieBooks.length === 1) {
-    return <Col>Only one more movie left!</Col>;
-  }
   return (
-    <Row>
-      {movieBooks.map((movie) => (
-         <Col className="mb-5" key={movie.id} md={3}>
-          <MovieCard
-            movie={movie}
-            onMovieClick={(newSelectedMovie) => {
-              setSelectedMovie(newSelectedMovie);
-            }}
+    <div>
+      <Row className="justify-content-md-center">
+        <Col md={10}>
+          <MovieView
+            movie={selectedMovie}
+            onBackClick={() => setSelectedMovie(null)}
           />
         </Col>
-      ))}
-      <button
-       className="back-button"  
-        onClick={() => {
-          setUser(null);
-          setToken(null);
-          localStorage.clear();
-        }}
-      >
-        Logout
-      </button>
-    </Row>
-  )}
+      </Row>
+      <hr />
+      <h2 style={{ color: "white" }}>Recommended Movies</h2>
+      <Row>
+        <Col className="mb-5" md={3}>
+          {similarMovies.map((movie) => (
+            <MovieCard
+              key={movie.id}
+              movie={movie}
+              onMovieClick={(newSelectedMovie) => {
+                setSelectedMovie(newSelectedMovie);
+              }}
+            />
+          ))}
+        </Col>
+      </Row>
+    </div>
+  );
+}
+
+if (movieBooks.length === 0) {
+  return <Col>The list is empty!</Col>;
+}
+
+if (movieBooks.length === 1) {
+  return <Col>Only one more movie left!</Col>;
+}
+
+return (
+  <Row>
+    {movieBooks.map((movie) => (
+      <Col className="mb-5" key={movie.id} md={3}>
+        <MovieCard
+          movie={movie}
+          onMovieClick={(newSelectedMovie) => {
+            setSelectedMovie(newSelectedMovie);
+          }}
+        />
+      </Col>
+    ))}
+    <button
+  className="back-button"
+  onClick={() => {
+    setUser(null);
+    setToken(null);
+    localStorage.clear();
+  }}
+>
+  Logout
+</button>
+
+  </Row>
+)};

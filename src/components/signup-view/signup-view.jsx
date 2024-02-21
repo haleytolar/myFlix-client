@@ -35,7 +35,7 @@ export const SignupView = () => {
             } else if (password === "") {
                 alert("You have to enter a password.");
             } else if (email.includes("@") === false) {
-                alert("Please enter a valid email adress.")
+                alert("Please enter a valid email address.")
             }else {
                 alert("Signup failed");
             }
@@ -46,9 +46,9 @@ export const SignupView = () => {
 
     return (
         <Form onSubmit={handleSubmit} className="mt-5">
-          <Form.Label>Register:</Form.Label>
+          <Form.Label style={{ color: "white" }}>Register:</Form.Label>
           <Form.Group controlId="formUsername">
-            <Form.Label>Username:</Form.Label>
+            <Form.Label style={{ color: "white" }}>Username:</Form.Label>
             <Form.Control
               type="text"
               value={username}
@@ -59,7 +59,7 @@ export const SignupView = () => {
           </Form.Group>
     
           <Form.Group controlId="formPassword">
-            <Form.Label>Password:</Form.Label>
+            <Form.Label style={{ color: "white" }}>Password:</Form.Label>
             <Form.Control
               type="password"
               value={password}
@@ -68,7 +68,7 @@ export const SignupView = () => {
             />
             </Form.Group>
             <Form.Group controlId="formEmail">
-      <Form.Label>Email:</Form.Label>
+      <Form.Label style={{ color: "white" }}>Email:</Form.Label>
         <Form.Control
           type="email"
           value={email}
@@ -77,14 +77,14 @@ export const SignupView = () => {
         />
       </Form.Group>
       <Form.Group controlId="formBirthday">
-                <Form.Label>Birthday:</Form.Label>
+                <Form.Label style={{ color: "white" }}>Birthday:</Form.Label>
                 <Form.Control
                 type="date"
                 value={birthday}
                 onChange={(e) => setBirthday(e.target.value)}
                 />
             </Form.Group>
-            <Button type="submit" onClick={handleSubmit} className="mt-2">Submit</Button>
+            <Button type="submit" onClick={handleSubmit} className="mt-2" style={{ backgroundColor: "red" }}>Submit</Button>
     </Form>
   );
 };

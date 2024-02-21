@@ -1,9 +1,14 @@
-$color: steelblue;
 
-.my-flix {
-  color: $color;
-}
 
-$body-bg: white;
+$body-bg: black ;
+
+//#fdc407
+
 
 @import '~bootstrap/scss/bootstrap.scss';
+
+.bottom-button {
+  /* Stick the button to the bottom */
+  margin-top: auto;
+  padding: 10%;
+}
