@@ -56,59 +56,64 @@ export const MainView = () => {
 
   if (!user) {
     return (
-      <Row>
-          <>
-          <Col md={5}>
+      <Row className="justify-content-md-center">
+        <Col md={5} style={{ textAlign: "center", color: "white" }}>
           <LoginView onLoggedIn={(user, token) => {
             setUser(user);
             setToken(token);
           }} />
-          or
+          <div style={{ margin: "10px", padding: "10px 0", fontSize: "1.5em" }}>or</div>
           <SignupView />
-          </Col>
-        </>
+        </Col>
       </Row>
-    )
+    );
   }
 
-
   console.log("movieBooks", movieBooks);
-if (selectedMovie) {
-  let genre = selectedMovie.genre.genreName;
-
-  // Filter movies by genre
-  let similarMovies = movieBooks.filter(
-    (movie) => movie.genre.genreName === genre
-  );
-
-  return (
-    <div>
-      <Row className="justify-content-md-center">
-        <Col md={10}>
-          <MovieView
-            movie={selectedMovie}
-            onBackClick={() => setSelectedMovie(null)}
-          />
-        </Col>
-      </Row>
-      <hr />
-      <h2 style={{ color: "white" }}>Recommended Movies</h2>
-      <Row>
-        <Col className="mb-5" md={3}>
-          {similarMovies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              onMovieClick={(newSelectedMovie) => {
-                setSelectedMovie(newSelectedMovie);
-              }}
+  if (selectedMovie) {
+    let genre = selectedMovie.genre.genreName;
+  
+    // Filter movies by genre and exclude the selected movie
+    let similarMovies = movieBooks.filter(
+      (movie) => movie.genre.genreName === genre && movie.id !== selectedMovie.id
+    );
+  
+    return (
+      <div>
+        <Row className="justify-content-md-center">
+          <Col md={10}>
+            <MovieView
+              movie={selectedMovie}
+              onBackClick={() => setSelectedMovie(null)}
             />
-          ))}
-        </Col>
-      </Row>
-    </div>
-  );
-}
+          </Col>
+        </Row>
+        {similarMovies.length > 0 && (
+          <>
+            <hr />
+            <h2 style={{ color: "white", borderTop: "2px solid white", padding: "20px 0" }}>Recommended Movies</h2>
+            <Row>
+              {similarMovies.map((movie) => (
+                <Col key={movie.id} xs={12} sm={6} md={4} lg={3} className="mb-4">
+                  <MovieCard
+                    movie={movie}
+                    onMovieClick={(newSelectedMovie) => {
+                      setSelectedMovie(newSelectedMovie);
+                    }}
+                  />
+                </Col>
+              ))}
+            </Row>
+          </>
+        )}
+      </div>
+    );
+  }
+  
+  
+  
+  
+  
 
 if (movieBooks.length === 0) {
   return <Col>The list is empty!</Col>;

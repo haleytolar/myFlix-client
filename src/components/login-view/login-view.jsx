@@ -36,29 +36,40 @@ export const LoginView = ({ onLoggedIn }) => {
         alert("Something went wrong");
       });
   };
-  
+
   return (
     <Form onSubmit={handleSubmit} className="mt-5">
-        <Form.Group controlId="formUsername">
-            <Form.Label style={{ color: "white" }}>Username:</Form.Label>
-            <Form.Control 
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)} 
-            required
-            minLength="5"
-            />
-        </Form.Group>
-        <Form.Group controlId="formPassword">
-            <Form.Label style={{ color: "white" }}>Password:</Form.Label>
-            <Form.Control 
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-             />
-        </Form.Group>
-        <Button type="submit" className="mt-2" style={{ backgroundColor: "red" }}>Submit</Button>
+      <Form.Label style={{ color: "white", fontSize: "1.5em", fontWeight: "bold" }}>
+        Login:
+      </Form.Label>
+      <Form.Group controlId="formUsername">
+        <Form.Label style={{ color: "white" }}>Username:</Form.Label>
+        <Form.Control
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          minLength="5"
+          style={{ backgroundColor: "white", color: "black" }}
+        />
+      </Form.Group>
+      <Form.Group controlId="formPassword">
+        <Form.Label style={{ color: "white" }}>Password:</Form.Label>
+        <Form.Control
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          style={{ backgroundColor: "white", color: "black" }}
+        />
+      </Form.Group>
+      <Button
+        type="submit"
+        className="mt-2"
+        style={{ backgroundColor: "red", border: "none" }}
+      >
+        Submit
+      </Button>
     </Form>
-);
+  );
 };

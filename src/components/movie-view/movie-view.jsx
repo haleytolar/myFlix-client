@@ -14,18 +14,17 @@ export const MovieView = ({ movie, onBackClick }) => {
             maxHeight: "80vh",
             width: "100%",
             margin: "auto",
+            border: "4px solid white", // Add this line for the white border
           }}
         />
       </div>
-      <div style={{ color: "white" }}>
-        <span>Title: </span>
+      <div style={{ color: "white", marginTop: "20px", fontSize: "1.5em" }}>
         <span>{movie.title}</span>
       </div>
       <div style={{ color: "white" }}>
-        <span>Description: </span>
         <span>{movie.description}</span>
       </div>
-      <div style={{ color: "white" }}>
+      <div style={{ color: "white", marginTop: "10px" }}>
         <span>Genre: </span>
         <span>{movie.genre.genreName}</span>
       </div>
@@ -36,7 +35,7 @@ export const MovieView = ({ movie, onBackClick }) => {
       <button
         onClick={onBackClick}
         className="back-button"
-        style={{ cursor: "pointer" }}
+        style={{ cursor: "pointer", marginTop: "20px", padding: "10px 20px", fontSize: "1em" }}
       >
         Back
       </button>
