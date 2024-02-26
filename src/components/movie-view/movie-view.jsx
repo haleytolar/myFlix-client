@@ -1,8 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./movie-view.scss";
 
-// The MovieView function component
-export const MovieView = ({ movie, onBackClick }) => {
+export const MovieView = ({ movie }) => {
   return (
     <div style={{ backgroundColor: 'black', padding: "20px", textAlign: "center" }}>
       <div>
@@ -14,7 +14,7 @@ export const MovieView = ({ movie, onBackClick }) => {
             maxHeight: "80vh",
             width: "100%",
             margin: "auto",
-            border: "4px solid white", // Add this line for the white border
+            border: "4px solid white",
           }}
         />
       </div>
@@ -32,13 +32,9 @@ export const MovieView = ({ movie, onBackClick }) => {
         <span>Director: </span>
         <span>{movie.director.directorName}</span>
       </div>
-      <button
-        onClick={onBackClick}
-        className="back-button"
-        style={{ cursor: "pointer", marginTop: "20px", padding: "10px 20px", fontSize: "1em" }}
-      >
+      <Link to="/" className="back-button" style={{ marginTop: "20px", padding: "10px 20px", fontSize: "1em" }}>
         Back
-      </button>
+      </Link>
     </div>
   );
 };
