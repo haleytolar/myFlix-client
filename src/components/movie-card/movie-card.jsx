@@ -50,7 +50,7 @@ MovieCard.propTypes = {
       directorName: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  user: PropTypes.object, // You can update this based on your user object structure
+  user: PropTypes.object, //update this based on your user object structure
   addFavoriteMovie: PropTypes.func.isRequired,
   removeFavoriteMovie: PropTypes.func.isRequired,
 };
