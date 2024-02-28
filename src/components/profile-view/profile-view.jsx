@@ -1,8 +1,10 @@
 // profile-view.jsx
 
 import React, { useState, useEffect } from 'react';
-import { MovieCard } from "../movie-card/movie-card";
+import MovieCard from "../movie-card/movie-card";
 import { Row, Col, Form, Button } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
+
 
 const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
   const [userData, setUserData] = useState({
@@ -15,29 +17,36 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
   const [favoriteMovies, setFavoriteMovies] = useState([]);
 
   useEffect(() => {
-    // Fetch user information using the /users endpoint
-    fetch(`https://movieflix-87lf.onrender.com/users/${user.Username}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://movieflix-87lf.onrender.com/users/${user.Username}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Fetch failed');
+        }
+  
+        const data = await response.json();
         setUserData({
           username: data.Username,
           password: data.Password,
           email: data.Email,
           birthday: data.Birthday,
         });
-
-        // Filter movies based on user's favoriteMovies array
+  
         let favoriteMoviesList = movies.filter((movie) => data.FavoriteMovies.includes(movie._id));
         setFavoriteMovies(favoriteMoviesList);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Fetch error:', error);
-      });
+      }
+    };
+  
+    fetchData();
   }, [user, token, movies]);
+  
 
   const handleUpdate = (event) => {
     event.preventDefault();
@@ -137,10 +146,11 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
               <Row className="justify-content-md-center mx-3 my-4">
                 <h2 className="profile-title">Favorite movies</h2>
                 {favoriteMovies.map((movie) => (
-                  <Col key={movie._id} className="m-3">
-                    <MovieCard movie={movie} token={token} setUser={setUser} user={user} />
-                  </Col>
-                ))}
+  <Col key={movie._id} className="m-3">
+    <MovieCard movie={movie} token={token} setUser={setUser} user={user} />
+  </Col>
+))}
+
               </Row>
 
               <Button variant="primary" onClick={handleUpdate}>

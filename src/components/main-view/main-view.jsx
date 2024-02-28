@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { MovieCard } from "../movie-card/movie-card";
+import MovieCard from "../movie-card/movie-card";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import { MovieView } from "../movie-view/movie-view";
 import { Col, Row } from "react-bootstrap";
 import { Routes, Route, Navigate, BrowserRouter, Link } from "react-router-dom";
 import Navbar from "../navigation-bar/navigation-bar";
@@ -78,73 +79,65 @@ export const MainView = () => {
             </Row>
           }
         />
-        <Route
-          path="/movies/:movieId"
-          element={(params) => {
-            const movieId = params.match.params.movieId;
-            const movie = movieBooks.find((m) => m.id === movieId);
+         <Route
+        path="/movies/:movieId"
+        element={(params) => {
+          const movieId = params.match.params.movieId;
+          const movie = movieBooks.find((m) => m.id === movieId);
 
-            return (
-              movie ? (
-                <div>
-                  <Row className="justify-content-md-center">
-                    <Col md={10}>
-                      <MovieCard movie={movie} />
-                    </Col>
-                  </Row>
-
-                  {movieBooks.length > 0 && (
-                    <>
-                      <hr />
-                      <h2 style={{ color: "white", borderTop: "2px solid white", padding: "20px 0" }}>Recommended Movies</h2>
-                      <Row>
-                        {movieBooks
-                          .filter((m) => m.genre.genreName === movie.genre.genreName && m.id !== movie.id)
-                          .map((m) => (
-                            <Col key={m.id} xs={12} sm={6} md={4} lg={3} className="mb-4">
-                              <Link to={`/movies/${m.id}`}>
-                                <MovieCard movie={m} />
-                              </Link>
-                            </Col>
-                          ))}
-                      </Row>
-                    </>
-                  )}
-                </div>
-              ) : (
-                <Navigate to="/" />
-              )
-            );
-          }}
-        />
-        <Route
-          path="/"
-          element={
-            movieBooks.length === 0 ? (
-              <Col>The list is empty!</Col>
-            ) : movieBooks.length === 1 ? (
-              <Col>Only one more movie left!</Col>
-            ) : (
-              <Row>
-                {movieBooks.map((movie) => (
-                  <Col className="mb-5" key={movie.id} md={3}>
-                    <MovieCard movie={movie} />
+          return (
+            movie ? (
+              <div>
+                <Row className="justify-content-md-center">
+                  <Col md={10}>
+                    <MovieView movie={movie} />
                   </Col>
-                ))}
-                <button
-                  className="back-button"
-                  onClick={() => {
-                    setUser(null);
-                    setToken(null);
-                    localStorage.clear();
-                  }}
-                >
-                  Logout
-                </button>
-              </Row>
+                </Row>
+
+                {movieBooks.length > 0 && (
+                  <>
+                    <hr />
+                    <h2 style={{ color: "white", borderTop: "2px solid white", padding: "20px 0" }}>Recommended Movies</h2>
+                    <Row>
+                      {movieBooks
+                        .filter((m) => m.genre.genreName === movie.genre.genreName && m.id !== movie.id)
+                        .map((m) => (
+                          <Col key={m.id} xs={12} sm={6} md={4} lg={3} className="mb-4">
+                            <Link to={`/movies/${m.id}`}>
+                              <MovieCard movie={m} />
+                            </Link>
+                          </Col>
+                        ))}
+                    </Row>
+                  </>
+                )}
+              </div>
+            ) : (
+              <Navigate to="/" />
             )
-          }
-        />
+          );
+        }}
+      />
+      <Route
+        path="/"
+        element={
+          movieBooks.length === 0 ? (
+            <Col>The list is empty!</Col>
+          ) : movieBooks.length === 1 ? (
+            <Col>Only one more movie left!</Col>
+          ) : (
+            <Row>
+              {movieBooks.map((movie) => (
+                <Col className="mb-5" key={movie.id} md={3}>
+                  <Link to={`/movies/${movie.id}`}>
+                    <MovieCard movie={movie} />
+                  </Link>
+                </Col>
+              ))}
+            </Row>
+          )
+        }
+      />
    <Route
   path="/profile"
   element={
@@ -171,7 +164,6 @@ export const MainView = () => {
     </>
   }
 />
-
       </Routes>
     </BrowserRouter>
   );
