@@ -79,45 +79,10 @@ export const MainView = () => {
             </Row>
           }
         />
-         <Route
-        path="/movies/:movieId"
-        element={(params) => {
-          const movieId = params.match.params.movieId;
-          const movie = movieBooks.find((m) => m.id === movieId);
-
-          return (
-            movie ? (
-              <div>
-                <Row className="justify-content-md-center">
-                  <Col md={10}>
-                    <MovieView movie={movie} />
-                  </Col>
-                </Row>
-
-                {movieBooks.length > 0 && (
-                  <>
-                    <hr />
-                    <h2 style={{ color: "white", borderTop: "2px solid white", padding: "20px 0" }}>Recommended Movies</h2>
-                    <Row>
-                      {movieBooks
-                        .filter((m) => m.genre.genreName === movie.genre.genreName && m.id !== movie.id)
-                        .map((m) => (
-                          <Col key={m.id} xs={12} sm={6} md={4} lg={3} className="mb-4">
-                            <Link to={`/movies/${m.id}`}>
-                              <MovieCard movie={m} />
-                            </Link>
-                          </Col>
-                        ))}
-                    </Row>
-                  </>
-                )}
-              </div>
-            ) : (
-              <Navigate to="/" />
-            )
-          );
-        }}
-      />
+          <Route
+          path="/movies/:movieId"
+          element={<MovieView movies={movieBooks} />}
+        />
       <Route
         path="/"
         element={
@@ -130,7 +95,7 @@ export const MainView = () => {
               {movieBooks.map((movie) => (
                 <Col className="mb-5" key={movie.id} md={3}>
                   <Link to={`/movies/${movie.id}`}>
-                    <MovieCard movie={movie} />
+                  <MovieCard movie={movie} user={user}/>
                   </Link>
                 </Col>
               ))}

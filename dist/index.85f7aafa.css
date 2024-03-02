@@ -1,6 +1,10 @@
+.custom-card-title, .custom-card-text {
+  text-decoration: none !important;
+}
+
 .back-button {
   color: #f5f5f5;
-  background-color: red;
+  background-color: #daa520;
   border: none;
   border-radius: 4px;
   padding: 1px 12px;
@@ -26545,4 +26549,4 @@ textarea.form-control-lg {
   padding: 10%;
 }
 
-/*# sourceMappingURL=index.5f1df611.css.map */
+/*# sourceMappingURL=index.85f7aafa.css.map */

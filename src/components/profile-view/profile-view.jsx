@@ -1,10 +1,6 @@
-// profile-view.jsx
-
 import React, { useState, useEffect } from 'react';
 import MovieCard from "../movie-card/movie-card";
-import { Row, Col, Form, Button } from 'react-bootstrap';
-import { Container } from 'react-bootstrap';
-
+import { Row, Col, Form, Button, Container } from 'react-bootstrap';
 
 const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
   const [userData, setUserData] = useState({
@@ -51,7 +47,7 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
   const handleUpdate = (event) => {
     event.preventDefault();
 
-    const { username, password, email, birthday } = userData; // Destructure values from userData
+    const { username, password, email, birthday } = userData;
     const data = {
       username: username,
       password: password,
@@ -59,7 +55,6 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
       birthday: birthday,
     };
 
-    // Update user information
     fetch(`https://movieflix-87lf.onrender.com/users/${user.name}`, {
       method: 'PUT',
       body: JSON.stringify(data),
@@ -115,7 +110,7 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
   return (
     <Container>
       <Row className="justify-content-md-center mx-3 my-4">
-        <h2 className="profile-title">Favorite movies</h2>
+        <h2 className="profile-title" style={{ color: "white" }}>Favorite movies</h2>
         {favoriteMovies.map((movie) => (
           <Col key={movie._id} className="m-3">
             <MovieCard movie={movie} token={token} setUser={setUser} user={user} />
@@ -126,37 +121,36 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
       <Container>
         <Row className="justify-content-md-center">
           <Col md={6}>
-            <h2>Profile</h2>
+            <h2 style={{ color: "white" }}>Profile</h2>
             <Form>
               <Form.Group controlId="formUsername">
-                <Form.Label>Username</Form.Label>
-                <Form.Control type="text" value={userData.username} readOnly />
+                <Form.Label style={{ color: "white" }}>Username</Form.Label>
+                <Form.Control type="text" value={userData.username} readOnly style={{ color: "white" }} />
               </Form.Group>
 
               <Form.Group controlId="formEmail">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" value={userData.email} readOnly />
+                <Form.Label style={{ color: "white" }}>Email</Form.Label>
+                <Form.Control type="email" value={userData.email} readOnly style={{ color: "white" }} />
               </Form.Group>
 
               <Form.Group controlId="formBirthday">
-                <Form.Label>Date of Birth</Form.Label>
-                <Form.Control type="text" value={userData.birthday} readOnly />
+                <Form.Label style={{ color: "white" }}>Date of Birth</Form.Label>
+                <Form.Control type="text" value={userData.birthday} readOnly style={{ color: "white" }} />
               </Form.Group>
 
               <Row className="justify-content-md-center mx-3 my-4">
-                <h2 className="profile-title">Favorite movies</h2>
+                <h2 className="profile-title" style={{ color: "white" }}>Favorite movies</h2>
                 {favoriteMovies.map((movie) => (
-  <Col key={movie._id} className="m-3">
-    <MovieCard movie={movie} token={token} setUser={setUser} user={user} />
-  </Col>
-))}
-
+                  <Col key={movie._id} className="m-3">
+                    <MovieCard movie={movie} token={token} setUser={setUser} user={user} />
+                  </Col>
+                ))}
               </Row>
 
-              <Button variant="primary" onClick={handleUpdate}>
+              <Button variant="primary" onClick={handleUpdate} style={{ color: "white" }}>
                 Update Profile
               </Button>{' '}
-              <Button variant="danger" onClick={handleDeregister}>
+              <Button variant="danger" onClick={handleDeregister} style={{ color: "white" }}>
                 Deregister
               </Button>
             </Form>

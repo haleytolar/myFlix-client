@@ -1,0 +1,6 @@
+/* MovieCard.css */
+
+.custom-card-title,
+.custom-card-text {
+  text-decoration: none !important;
+}
