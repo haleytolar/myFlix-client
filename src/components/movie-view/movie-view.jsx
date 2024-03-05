@@ -55,7 +55,7 @@ export const MovieView = ({ movies }) => {
             )
             .map((m) => (
               <Col key={m.id} xs={12} sm={6} md={4} lg={3} className="mb-4">
-                <Link to={`/movies/${m.id}`}>
+                <Link to={`/movies/${movie.id}`}>
                   <MovieCard movie={m} />
                 </Link>
               </Col>

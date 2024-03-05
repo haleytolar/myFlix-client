@@ -4,3 +4,9 @@
 .custom-card-text {
   text-decoration: none !important;
 }
+
+.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

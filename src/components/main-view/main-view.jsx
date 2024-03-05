@@ -56,19 +56,27 @@ export const MainView = () => {
     <BrowserRouter>
       <Navbar user={user} onLogout={() => { setUser(null); setToken(null); localStorage.clear(); }} />
       <Routes>
-        <Route
-          path="/login"
-          element={
-            <Row className="justify-content-md-center">
-              <Col md={5} style={{ textAlign: "center", color: "white" }}>
-                <LoginView onLoggedIn={(user, token) => {
-                  setUser(user);
-                  setToken(token);
-                }} />
-              </Col>
-            </Row>
-          }
-        />
+      <Route
+  path="/login"
+  element={
+    <>
+      {user ? (
+        <Navigate to="/" />
+      ) : (
+        <Col md={6} className="mx-auto mt-5">
+          <LoginView
+            onLoggedIn={(user, token) => {
+              setUser(user);
+              setToken(token);
+            }}
+          />
+        </Col>
+      )}
+    </>
+  }
+/>
+
+
         <Route
           path="/signup"
           element={
@@ -94,8 +102,13 @@ export const MainView = () => {
             <Row>
               {movieBooks.map((movie) => (
                 <Col className="mb-5" key={movie.id} md={3}>
-                  <Link to={`/movies/${movie.id}`}>
-                  <MovieCard movie={movie} user={user}/>
+                  <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>
+                  <MovieCard
+                        movie={movie}
+                        user={user}
+                        token={token}
+                        setUser={setUser}
+                      />
                   </Link>
                 </Col>
               ))}
