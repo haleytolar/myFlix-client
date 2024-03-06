@@ -91,31 +91,36 @@ export const MainView = () => {
           path="/movies/:movieId"
           element={<MovieView movies={movieBooks} />}
         />
-      <Route
-        path="/"
-        element={
-          movieBooks.length === 0 ? (
-            <Col>The list is empty!</Col>
-          ) : movieBooks.length === 1 ? (
-            <Col>Only one more movie left!</Col>
-          ) : (
-            <Row>
-              {movieBooks.map((movie) => (
-                <Col className="mb-5" key={movie.id} md={3}>
-                  <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>
-                  <MovieCard
-                        movie={movie}
-                        user={user}
-                        token={token}
-                        setUser={setUser}
-                      />
-                  </Link>
-                </Col>
-              ))}
-            </Row>
-          )
-        }
-      />
+            <Route
+          path="/"
+          element={
+            user ? (
+              movieBooks.length > 0 ? (
+                <Row>
+                  {movieBooks.map((movie) => (
+                    <Col className="mb-5" key={movie.id} md={3}>
+                      <Link
+                        to={`/movies/${movie.id}`}
+                        style={{ textDecoration: "none" }}
+                      >
+                        <MovieCard
+                          movie={movie}
+                          user={user}
+                          token={token}
+                          setUser={setUser}
+                        />
+                      </Link>
+                    </Col>
+                  ))}
+                </Row>
+              ) : (
+                <Col>The list is empty!</Col>
+              )
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
    <Route
   path="/profile"
   element={
