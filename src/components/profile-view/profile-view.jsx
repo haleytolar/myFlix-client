@@ -73,9 +73,6 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
         // Add other fields as needed
       });
   
-      // Optionally, update other state variables if needed
-      // setFavoriteMovies(updatedFavoriteMovies);
-  
       // Reset edit mode
       setIsEditing(false);
   
