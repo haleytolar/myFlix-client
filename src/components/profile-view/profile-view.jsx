@@ -10,31 +10,7 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
     birthday: '',
   });
 
-  const handleDeregister = () => {
-    // Add logic to handle deregistration
-    fetch(`https://movieflix-87lf.onrender.com/users/${user.Username}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          setUser(null);
-          alert('Your account has been deleted');
-        } else {
-          alert('Something went wrong.');
-        }
-      })
-      .catch((error) => {
-        console.error('Deregister error:', error);
-        alert('Something went wrong.');
-      });
-  };
-
-
-  const [isEditing, setIsEditing] = useState(false); // State to manage edit mode
-
+  const [isEditing, setIsEditing] = useState(false);
   const [favoriteMovies, setFavoriteMovies] = useState([]);
 
   useEffect(() => {
@@ -45,11 +21,11 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
             Authorization: `Bearer ${token}`,
           },
         });
-
+  
         if (!response.ok) {
           throw new Error('Fetch failed');
         }
-
+  
         const data = await response.json();
         setUserData({
           username: data.Username,
@@ -57,34 +33,84 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
           email: data.Email,
           birthday: data.Birthday,
         });
-
+  
         let favoriteMoviesList = movies.filter((movie) => data.FavoriteMovies.includes(movie.id));
         setFavoriteMovies(favoriteMoviesList);
       } catch (error) {
         console.error('Fetch error:', error);
       }
     };
-
+  
     fetchData();
   }, [user, token, movies]);
-
-  // Format date of birth
+  
   const formattedBirthday = new Date(userData.birthday).toLocaleDateString();
-
-  const handleUpdate = (event) => {
+  
+  const handleUpdate = async (event) => {
     event.preventDefault();
+  
+    try {
+      // Make the PUT request to update user data
+      const response = await fetch(`https://movieflix-87lf.onrender.com/users/${user.Username}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(userData),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Update failed');
+      }
+  
+      // Update the local state with the new user data
+      setUser({
+        ...user,
+        Username: userData.username,
+        Email: userData.email,
+        Birthday: userData.birthday,
+        // Add other fields as needed
+      });
+  
+      // Optionally, update other state variables if needed
+      // setFavoriteMovies(updatedFavoriteMovies);
+  
+      // Reset edit mode
+      setIsEditing(false);
+  
+      // Log the success message or perform other actions
+      console.log('User data updated successfully');
+    } catch (error) {
+      console.error('Update error:', error);
+      alert('Update failed.');
+    }
+  };
+  
+  
 
-    // Add logic to update user data on the server
+  const handleDeregister = async () => {
+    try {
+      const response = await fetch(`https://movieflix-87lf.onrender.com/users/${user.Username}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    // For now, let's log the updated user data
-    console.log('Updated User Data:', userData);
-
-    // Reset edit mode
-    setIsEditing(false);
+      if (response.ok) {
+        setUser(null);
+        alert('Your account has been deleted');
+      } else {
+        alert('Something went wrong.');
+      }
+    } catch (error) {
+      console.error('Deregister error:', error);
+      alert('Something went wrong.');
+    }
   };
 
   const handleEdit = () => {
-    // Toggle edit mode
     setIsEditing(!isEditing);
   };
 
@@ -100,7 +126,7 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
                 <FormControl
                   type="text"
                   value={userData.username}
-                  readOnly={!isEditing} // Make the field read-only based on the edit mode
+                  readOnly={!isEditing}
                   onChange={(e) => setUserData({ ...userData, username: e.target.value })}
                   style={{ color: 'white' }}
                 />
@@ -128,6 +154,7 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
                 />
               </Form.Group>
 
+
               <Row className="justify-content-md-center mx-2 my-4">
                 <h2 className="profile-title" style={{ color: 'white', marginBottom: '40px' }}>
                   Favorite movies
@@ -140,6 +167,7 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
                   ))}
                 </div>
               </Row>
+
 
               {isEditing ? (
                 <Button variant="primary" onClick={handleUpdate} style={{ color: 'white' }}>
