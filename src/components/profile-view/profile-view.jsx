@@ -73,16 +73,6 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
         // Add other fields as needed
       });
   
-      // Update localStorage
-      const updatedUser = {
-        ...user,
-        Username: userData.username,
-        Email: userData.email,
-        Birthday: userData.birthday,
-        // Add other fields as needed
-      };
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-  
       // Reset edit mode
       setIsEditing(false);
   
@@ -198,3 +188,4 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
 };
 
 export default ProfileView;
+
