@@ -1,13 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import MovieCard from '../movie-card/movie-card';
-import { Row, Col, Form, Button, Container, FormControl } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import MovieCard from "../movie-card/movie-card";
+import {
+  Row,
+  Col,
+  Form,
+  Button,
+  Container,
+  FormControl,
+} from "react-bootstrap";
 
 const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
   const [userData, setUserData] = useState({
-    username: '',
-    password: '',
-    email: '',
-    birthday: '',
+    username: "",
+    password: "",
+    email: "",
+    birthday: "",
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -16,16 +23,19 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://movieflix-87lf.onrender.com/users/${user.Username}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-  
+        const response = await fetch(
+          `https://movieflix-87lf.onrender.com/users/${user.Username}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
         if (!response.ok) {
-          throw new Error('Fetch failed');
+          throw new Error("Fetch failed");
         }
-  
+
         const data = await response.json();
         setUserData({
           username: data.Username,
@@ -33,77 +43,83 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
           email: data.Email,
           birthday: data.Birthday,
         });
-  
-        let favoriteMoviesList = movies.filter((movie) => data.FavoriteMovies.includes(movie.id));
+
+        let favoriteMoviesList = movies.filter((movie) =>
+          data.FavoriteMovies.includes(movie.id)
+        );
         setFavoriteMovies(favoriteMoviesList);
       } catch (error) {
-        console.error('Fetch error:', error);
+        console.error("Fetch error:", error);
       }
     };
-  
+
     fetchData();
   }, [user, token, movies]);
-  
+
   const formattedBirthday = new Date(userData.birthday).toLocaleDateString();
-  
+
   const handleUpdate = async (event) => {
     event.preventDefault();
-  
+
     try {
       // Make the PUT request to update user data
-      const response = await fetch(`https://movieflix-87lf.onrender.com/users/${user.Username}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(userData),
-      });
-  
+      const response = await fetch(
+        `https://movieflix-87lf.onrender.com/users/${user.Username}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            Username: userData.username,
+            Email: userData.email,
+            Birthday: userData.birthday,
+          }),
+        }
+      );
+
       if (!response.ok) {
-        throw new Error('Update failed');
+        throw new Error("Update failed");
       }
-  
+      const updatedUserData = await response.json();
       // Update the local state with the new user data
-      setUser({
-        ...user,
-        Username: userData.username,
-        Email: userData.email,
-        Birthday: userData.birthday,
-        // Add other fields as needed
-      });
-  
+      setUser(updatedUserData);
+
+      localStorage.setItem("user", JSON.stringify(updatedUserData));
+
       // Reset edit mode
       setIsEditing(false);
-  
+
       // Log the success message or perform other actions
-      console.log('User data updated successfully');
+      console.log("User data updated successfully");
     } catch (error) {
-      console.error('Update error:', error);
-      alert('Update failed.');
+      console.error("Update error:", error);
+      alert("Update failed.");
     }
   };
-  
-  
 
   const handleDeregister = async () => {
     try {
-      const response = await fetch(`https://movieflix-87lf.onrender.com/users/${user.Username}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `https://movieflix-87lf.onrender.com/users/${user.Username}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.ok) {
         setUser(null);
-        alert('Your account has been deleted');
+        alert("Your account has been deleted");
       } else {
-        alert('Something went wrong.');
+        alert("Something went wrong.");
       }
     } catch (error) {
-      console.error('Deregister error:', error);
-      alert('Something went wrong.');
+      console.error("Deregister error:", error);
+      alert("Something went wrong.");
     }
   };
 
@@ -151,19 +167,20 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
                 />
               </Form.Group>
 
-
               <Row className="justify-content-md-center mx-2 my-4">
-                <h2 className="profile-title" style={{ color: 'white', marginBottom: '40px' }}>
-                  Favorite movies
-                </h2>
-                <div className="favorite-movies-container d-flex flex-wrap justify-content-around" style={{  marginBottom: '40px' }}>
-                  {favoriteMovies.map((movie) => (
-                    <Col key={movie._id} xs={12} sm={6} md={4} lg={3} className="mb-2">
-                      <MovieCard movie={movie} token={token} setUser={setUser} user={user} />
-                    </Col>
-                  ))}
-                </div>
-              </Row>
+  <h2 className="profile-title" style={{ color: 'white', marginBottom: '40px' }}>
+    Favorite movies
+  </h2>
+  <div className="favorite-movies-container d-flex flex-wrap" style={{ marginBottom: '40px', padding: '0 20px' }}>
+    {favoriteMovies.map((movie) => (
+      <Col key={movie._id} xs={12} sm={6} md={4} lg={3} className="mb-5">
+        <MovieCard movie={movie} token={token} setUser={setUser} user={user} />
+      </Col>
+    ))}
+  </div>
+</Row>
+
+
 
 
               {isEditing ? (

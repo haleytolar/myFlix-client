@@ -99,8 +99,8 @@ const MovieCard = ({
       >
         <Card.Img variant="top" src={movie.imagePath} />
         <Card.Body className="d-flex flex-column align-items-center">
-          <Card.Title className="text-truncate">{movie.title}</Card.Title>
-          <Card.Text className="custom-card-text text-truncate">
+          <Card.Title style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{movie.title}</Card.Title>
+          <Card.Text style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {movie.director.directorName}
           </Card.Text>
           {user && (
