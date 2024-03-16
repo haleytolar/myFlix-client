@@ -10,3 +10,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.remove-btn {
+  color: red; /* Set the text color to red */
+}

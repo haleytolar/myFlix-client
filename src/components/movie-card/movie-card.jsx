@@ -107,11 +107,11 @@ const MovieCard = ({
             <div className="mt-auto">
               {isFavorite ? (
                 <Button
-                  className="fav-btn"
-                  onClick={(event) => handleRemoveFavoriteMovie(event)}
-                >
-                  Remove Favorite
-                </Button>
+                className="fav-btn remove-btn" // Added "remove-btn" class
+                onClick={(event) => handleRemoveFavoriteMovie(event)}
+              >
+                Remove Favorite
+              </Button>              
              ) : (
               <Button
                 className="fav-btn"
