@@ -3,11 +3,10 @@ import MovieCard from "../movie-card/movie-card";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import { MovieView } from "../movie-view/movie-view";
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, FormControl, Dropdown, ButtonGroup } from "react-bootstrap"; // Add these imports
 import { Routes, Route, Navigate, BrowserRouter, Link } from "react-router-dom";
 import Navbar from "../navigation-bar/navigation-bar";
 import ProfileView from "../profile-view/profile-view";
-
 
 export const MainView = () => {
   const [movieBooks, setMovieBooks] = useState([]);
@@ -49,7 +48,7 @@ export const MainView = () => {
           };
         });
         setMovieBooks(moviesFromApi);
-setFilteredMovies(moviesFromApi);
+        setFilteredMovies(moviesFromApi);
       })
       .catch((error) => {
         console.error("Fetch error:", error);
@@ -67,8 +66,7 @@ setFilteredMovies(moviesFromApi);
     filterMovies(searchTerm, genre);
   };
 
-
- const filterMovies = (searchTerm, genre) => {
+  const filterMovies = (searchTerm, genre) => {
     let filtered = movieBooks;
 
     if (searchTerm) {
@@ -86,49 +84,62 @@ setFilteredMovies(moviesFromApi);
 
   return (
     <BrowserRouter>
-      <Navbar user={user} onLogout={() => { setUser(null); setToken(null); localStorage.clear(); }}  
->
+      <Navbar
+        user={user}
+        onLogout={() => {
+          setUser(null);
+          setToken(null);
+          localStorage.clear();
+        }}
+      >
         <FormControl
           type="text"
           placeholder="Search movies..."
           className="my-3 mr-sm-2"
           value={searchTerm}
-          onChange={handleSearch} 
-/>
-<Dropdown as={ButtonGroup}>
-          <Dropdown.Toggle variant="secondary">Filter by Genre: {selectedGenre}</Dropdown.Toggle>
+          onChange={handleSearch}
+        />
+        <Dropdown as={ButtonGroup}>
+          <Dropdown.Toggle variant="secondary">
+            Filter by Genre: {selectedGenre}
+          </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => handleGenreSelect("All")}>All</Dropdown.Item>
-            <Dropdown.Item onClick={() => handleGenreSelect("Action")}>Action</Dropdown.Item>
-            <Dropdown.Item onClick={() => handleGenreSelect("Comedy")}>Comedy</Dropdown.Item>
-            <Dropdown.Item onClick={() => handleGenreSelect("Drama")}>Drama</Dropdown.Item>
+            <Dropdown.Item onClick={() => handleGenreSelect("All")}>
+              All
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => handleGenreSelect("Action")}>
+              Action
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => handleGenreSelect("Comedy")}>
+              Comedy
+            </Dropdown.Item>
+            <Dropdown.Item onClick={() => handleGenreSelect("Drama")}>
+              Drama
+            </Dropdown.Item>
             {/* Add more genres as needed */}
           </Dropdown.Menu>
         </Dropdown>
       </Navbar>
       <Routes>
-
-      <Route
-  path="/login"
-  element={
-    <>
-      {user ? (
-        <Navigate to="/" />
-      ) : (
-        <Col md={6} className="mx-auto mt-5">
-          <LoginView
-            onLoggedIn={(user, token) => {
-              setUser(user);
-              setToken(token);
-            }}
-          />
-        </Col>
-      )}
-    </>
-  }
-/>
-
-
+        <Route
+          path="/login"
+          element={
+            <>
+              {user ? (
+                <Navigate to="/" />
+              ) : (
+                <Col md={6} className="mx-auto mt-5">
+                  <LoginView
+                    onLoggedIn={(user, token) => {
+                      setUser(user);
+                      setToken(token);
+                    }}
+                  />
+                </Col>
+              )}
+            </>
+          }
+        />
         <Route
           path="/signup"
           element={
@@ -139,70 +150,69 @@ setFilteredMovies(moviesFromApi);
             </Row>
           }
         />
-          <Route
+        <Route
           path="/movies/:movieId"
           element={<MovieView movies={movieBooks} />}
         />
-            <Route
-  path="/"
-  element={
-    user ? (
-      <>
-        {filteredMovies.length > 0 ? (
-          <Row>
-            {filteredMovies.map((movie) => (
-              <Col className="mb-5" key={movie.id} md={3}>
-                <Link
-                  to={`/movies/${movie.id}`}
-                  style={{ textDecoration: "none" }}
-                >
-                  <MovieCard
-                    movie={movie}
-                    user={user}
-                    token={token}
-                    setUser={setUser}
-                  />
-                </Link>
-              </Col>
-            ))}
-          </Row>
-        ) : (
-          <Col>The list is empty!</Col>
-        )
-      ) : (
-        <Navigate to="/login" replace />
-      )
-  }
-/>
-
-   <Route
-  path="/profile"
-  element={
-    <>
-      {!user ? (
-        <Navigate to="/login" replace />
-      ) : (
-        <Col>
-          <Row>
-            <ProfileView
-              user={user}
-              token={token}
-              setUser={setUser}
-              movies={movieBooks} // Pass the movies array
-              onDelete={() => {
-                setUser(null);
-                setToken(null);
-                localStorage.clear();
-              }}
-            />
-          </Row>
-        </Col>
-      )}
-    </>
-  }
-/>
+        <Route
+          path="/"
+          element={
+            user ? (
+              <>
+                {filteredMovies.length > 0 ? (
+                  <Row>
+                    {filteredMovies.map((movie) => (
+                      <Col className="mb-5" key={movie.id} md={3}>
+                        <Link
+                          to={`/movies/${movie.id}`}
+                          style={{ textDecoration: "none" }}
+                        >
+                          <MovieCard
+                            movie={movie}
+                            user={user}
+                            token={token}
+                            setUser={setUser}
+                          />
+                        </Link>
+                      </Col>
+                    ))}
+                  </Row>
+                ) : (
+                  <Col>The list is empty!</Col>
+                )}
+              </>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <>
+              {!user ? (
+                <Navigate to="/login" replace />
+              ) : (
+                <Col>
+                  <Row>
+                    <ProfileView
+                      user={user}
+                      token={token}
+                      setUser={setUser}
+                      movies={movieBooks} // Pass the movies array
+                      onDelete={() => {
+                        setUser(null);
+                        setToken(null);
+                        localStorage.clear();
+                      }}
+                    />
+                  </Row>
+                </Col>
+              )}
+            </>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
 };
-
