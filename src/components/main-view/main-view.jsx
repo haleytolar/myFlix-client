@@ -144,36 +144,37 @@ setFilteredMovies(moviesFromApi);
           element={<MovieView movies={movieBooks} />}
         />
             <Route
-          path="/"
-          element={
-             user ? (
-              <>
-                {filteredMovies.length > 0 ? (
-                  <Row>
-                    {filteredMovies.map((movie) => (
-                      <Col className="mb-5" key={movie.id} md={3}>
-                        <Link
-                          to={`/movies/${movie.id}`}
-                          style={{ textDecoration: "none" }}
-                        >
-                          <MovieCard
-                            movie={movie}
-                            user={user}
-                            token={token}
-                            setUser={setUser}
-                          />
-                        </Link>
-                      </Col>
-                    ))}
-                  </Row>
-              ) : (
-                <Col>The list is empty!</Col>
-              )
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
+  path="/"
+  element={
+    user ? (
+      <>
+        {filteredMovies.length > 0 ? (
+          <Row>
+            {filteredMovies.map((movie) => (
+              <Col className="mb-5" key={movie.id} md={3}>
+                <Link
+                  to={`/movies/${movie.id}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <MovieCard
+                    movie={movie}
+                    user={user}
+                    token={token}
+                    setUser={setUser}
+                  />
+                </Link>
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          <Col>The list is empty!</Col>
+        )
+      ) : (
+        <Navigate to="/login" replace />
+      )
+  }
+/>
+
    <Route
   path="/profile"
   element={
