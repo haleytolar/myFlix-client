@@ -15,6 +15,9 @@ export const MainView = () => {
   const storedToken = localStorage.getItem("token");
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState("All");
 
   useEffect(() => {
     if (!token) {
@@ -46,16 +49,65 @@ export const MainView = () => {
           };
         });
         setMovieBooks(moviesFromApi);
+setFilteredMovies(moviesFromApi);
       })
       .catch((error) => {
         console.error("Fetch error:", error);
       });
   }, [token]);
 
+  const handleSearch = (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    setSearchTerm(searchTerm);
+    filterMovies(searchTerm, selectedGenre);
+  };
+
+  const handleGenreSelect = (genre) => {
+    setSelectedGenre(genre);
+    filterMovies(searchTerm, genre);
+  };
+
+
+ const filterMovies = (searchTerm, genre) => {
+    let filtered = movieBooks;
+
+    if (searchTerm) {
+      filtered = filtered.filter((movie) =>
+        movie.title.toLowerCase().includes(searchTerm)
+      );
+    }
+
+    if (genre !== "All") {
+      filtered = filtered.filter((movie) => movie.genre.genreName === genre);
+    }
+
+    setFilteredMovies(filtered);
+  };
+
   return (
     <BrowserRouter>
-      <Navbar user={user} onLogout={() => { setUser(null); setToken(null); localStorage.clear(); }} />
+      <Navbar user={user} onLogout={() => { setUser(null); setToken(null); localStorage.clear(); }}  
+>
+        <FormControl
+          type="text"
+          placeholder="Search movies..."
+          className="my-3 mr-sm-2"
+          value={searchTerm}
+          onChange={handleSearch} 
+/>
+<Dropdown as={ButtonGroup}>
+          <Dropdown.Toggle variant="secondary">Filter by Genre: {selectedGenre}</Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={() => handleGenreSelect("All")}>All</Dropdown.Item>
+            <Dropdown.Item onClick={() => handleGenreSelect("Action")}>Action</Dropdown.Item>
+            <Dropdown.Item onClick={() => handleGenreSelect("Comedy")}>Comedy</Dropdown.Item>
+            <Dropdown.Item onClick={() => handleGenreSelect("Drama")}>Drama</Dropdown.Item>
+            {/* Add more genres as needed */}
+          </Dropdown.Menu>
+        </Dropdown>
+      </Navbar>
       <Routes>
+
       <Route
   path="/login"
   element={
@@ -94,25 +146,26 @@ export const MainView = () => {
             <Route
           path="/"
           element={
-            user ? (
-              movieBooks.length > 0 ? (
-                <Row>
-                  {movieBooks.map((movie) => (
-                    <Col className="mb-5" key={movie.id} md={3}>
-                      <Link
-                        to={`/movies/${movie.id}`}
-                        style={{ textDecoration: "none" }}
-                      >
-                        <MovieCard
-                          movie={movie}
-                          user={user}
-                          token={token}
-                          setUser={setUser}
-                        />
-                      </Link>
-                    </Col>
-                  ))}
-                </Row>
+             user ? (
+              <>
+                {filteredMovies.length > 0 ? (
+                  <Row>
+                    {filteredMovies.map((movie) => (
+                      <Col className="mb-5" key={movie.id} md={3}>
+                        <Link
+                          to={`/movies/${movie.id}`}
+                          style={{ textDecoration: "none" }}
+                        >
+                          <MovieCard
+                            movie={movie}
+                            user={user}
+                            token={token}
+                            setUser={setUser}
+                          />
+                        </Link>
+                      </Col>
+                    ))}
+                  </Row>
               ) : (
                 <Col>The list is empty!</Col>
               )
@@ -151,3 +204,4 @@ export const MainView = () => {
     </BrowserRouter>
   );
 };
+
