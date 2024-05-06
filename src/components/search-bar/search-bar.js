@@ -3,12 +3,12 @@ import { FormControl, Dropdown, ButtonGroup } from "react-bootstrap";
 
 const SearchBar = ({ searchTerm, onSearch, selectedGenre, onGenreSelect }) => {
   return (
-    <div className="d-flex justify-content-center align-items-center w-100"> {/* Add this div */}
+    <div className="d-flex justify-content-center align-items-center w-100">
       <FormControl
         type="text"
         placeholder="Search movies..."
         className="my-3 mr-sm-2"
-        style={{ minWidth: "300px" }} {/* Adjust the width here */}
+        style={{ minWidth: "300px" }} // Corrected: Added comma after style attribute
         value={searchTerm}
         onChange={onSearch}
       />
@@ -33,4 +33,3 @@ const SearchBar = ({ searchTerm, onSearch, selectedGenre, onGenreSelect }) => {
 };
 
 export default SearchBar;
-
