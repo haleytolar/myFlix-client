@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate, BrowserRouter, Link } from "react-router-dom";
+import { Routes, Route, Navigate, BrowserRouter, Link, useNavigate } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import Navbar from "../navigation-bar/navigation-bar";
 import { SignupView } from "../signup-view/signup-view";
@@ -18,6 +18,7 @@ export const MainView = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("All");
+  const navigate = useNavigate(); // Import useNavigate hook
 
   useEffect(() => {
     if (!token) {
@@ -83,6 +84,13 @@ export const MainView = () => {
     setFilteredMovies(filtered);
   };
 
+  // Navigate to home route ("/") after successful login
+  const handleLogin = (user, token) => {
+    setUser(user);
+    setToken(token);
+    navigate('/'); // Navigate to home route
+  };
+
   return (
     <BrowserRouter>
       <Navbar
@@ -100,39 +108,9 @@ export const MainView = () => {
         onGenreSelect={handleGenreSelect} // Corrected
       />
       <Routes>
-        <Route
-          path="/login"
-          element={
-            <>
-              {user ? (
-                <Navigate to="/" />
-              ) : (
-                <Col md={6} className="mx-auto mt-5">
-                  <LoginView
-                    onLoggedIn={(user, token) => {
-                      setUser(user);
-                      setToken(token);
-                    }}
-                  />
-                </Col>
-              )}
-            </>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <Row className="justify-content-md-center">
-              <Col md={5} style={{ textAlign: "center", color: "white" }}>
-                <SignupView />
-              </Col>
-            </Row>
-          }
-        />
-        <Route
-          path="/movies/:movieId"
-          element={<MovieView movies={movieBooks} />}
-        />
+        <Route path="/login" element={<LoginView onLoggedIn={handleLogin} />} />
+        <Route path="/signup" element={<SignupView />} />
+        <Route path="/movies/:movieId" element={<MovieView movies={movieBooks} />} />
         <Route
           path="/"
           element={
