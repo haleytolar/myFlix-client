@@ -108,36 +108,9 @@ export const MainView = () => {
         onGenreSelect={handleGenreSelect} // Corrected
       />
       <Routes>
-        <Route
-          path="/login"
-          element={
-            <>
-              {user ? (
-                <Navigate to="/" />
-              ) : (
-                <Col md={6} className="mx-auto mt-5">
-                  <LoginView
-                    onLoggedIn={handleLogin} // Pass the handleLogin function
-                  />
-                </Col>
-              )}
-            </>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <Row className="justify-content-md-center">
-              <Col md={5} style={{ textAlign: "center", color: "white" }}>
-                <SignupView />
-              </Col>
-            </Row>
-          }
-        />
-        <Route
-          path="/movies/:movieId"
-          element={<MovieView movies={movieBooks} />}
-        />
+        <Route path="/login" element={<LoginView onLoggedIn={handleLogin} />} />
+        <Route path="/signup" element={<SignupView />} />
+        <Route path="/movies/:movieId" element={<MovieView movies={movieBooks} />} />
         <Route
           path="/"
           element={
