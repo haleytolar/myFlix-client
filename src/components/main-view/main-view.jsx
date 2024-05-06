@@ -92,7 +92,7 @@ export const MainView = () => {
 
   return (
     <div>
-      <Row className="align-items-center justify-content-center"> {/* Center the content horizontally */}
+      <Row className="align-items-center justify-content-center">
         <Col xs={12} md={6}>
           <SearchBar
             searchTerm={searchTerm}
