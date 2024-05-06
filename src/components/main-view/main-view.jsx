@@ -91,15 +91,17 @@ export const MainView = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+    <div>
       <Row>
         <Col>
-          <SearchBar
-            searchTerm={searchTerm}
-            onSearch={handleSearch}
-            selectedGenre={selectedGenre}
-            onGenreSelect={handleGenreSelect}
-          />
+          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+            <SearchBar
+              searchTerm={searchTerm}
+              onSearch={handleSearch}
+              selectedGenre={selectedGenre}
+              onGenreSelect={handleGenreSelect}
+            />
+          </div>
         </Col>
         <Col>
           <Navbar
