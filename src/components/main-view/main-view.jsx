@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate, Link } from "react-router-dom"; // Removed BrowserRouter import
+import { Routes, Route, useNavigate, Link } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import Navbar from "../navigation-bar/navigation-bar";
 import { SignupView } from "../signup-view/signup-view";
@@ -92,28 +92,24 @@ export const MainView = () => {
 
   return (
     <div>
-        <Row className="align-items-center justify-content-between"> {/* Add these classes */}
-        <Col xs={12} md={6}> {/* Adjust the grid layout */}
-          <Row>
-            <Col xs={12} md={6}> {/* Adjust the grid layout */}
-              <SearchBar
-                searchTerm={searchTerm}
-                onSearch={handleSearch}
-                selectedGenre={selectedGenre}
-                onGenreSelect={handleGenreSelect}
-              />
-            </Col>
-            <Col xs={12} md={6}> {/* Adjust the grid layout */}
-              <Navbar
-                user={user}
-                onLogout={() => {
-                  setUser(null);
-                  setToken(null);
-                  localStorage.clear();
-                }}
-              />
-            </Col>
-          </Row>
+      <Row className="align-items-center justify-content-center"> {/* Center the content horizontally */}
+        <Col xs={12} md={6}>
+          <SearchBar
+            searchTerm={searchTerm}
+            onSearch={handleSearch}
+            selectedGenre={selectedGenre}
+            onGenreSelect={handleGenreSelect}
+          />
+        </Col>
+        <Col xs={12} md={6}>
+          <Navbar
+            user={user}
+            onLogout={() => {
+              setUser(null);
+              setToken(null);
+              localStorage.clear();
+            }}
+          />
         </Col>
       </Row>
       <Routes>
