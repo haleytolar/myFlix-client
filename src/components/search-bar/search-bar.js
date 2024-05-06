@@ -5,7 +5,7 @@ const SearchBar = ({ searchTerm, onSearch, selectedGenre, onGenreSelect }) => {
   return (
     <div className="d-flex">
       <Dropdown as={ButtonGroup}>
-        <Dropdown.Toggle variant="secondary" style={{ color: "red" }}>
+        <Dropdown.Toggle variant="secondary" style={{ backgroundColor: "red", color: "white" }}>
           Filter by Genre: {selectedGenre}
         </Dropdown.Toggle>
         <Dropdown.Menu>
