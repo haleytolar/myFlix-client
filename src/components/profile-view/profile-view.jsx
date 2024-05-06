@@ -174,11 +174,14 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
   <div className="favorite-movies-container d-flex flex-wrap" style={{ marginBottom: '40px', padding: '0 20px' }}>
     {favoriteMovies.map((movie) => (
       <Col key={movie._id} xs={12} sm={6} md={4} lg={3} className="mb-5">
-        <MovieCard movie={movie} token={token} setUser={setUser} user={user} />
+        <div className="movie-card-container" style={{ height: '100%' }}>
+          <MovieCard movie={movie} token={token} setUser={setUser} user={user} />
+        </div>
       </Col>
     ))}
   </div>
 </Row>
+
 
 
 
