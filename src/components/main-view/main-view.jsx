@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate, Link } from "react-router-dom"; // Removed BrowserRouter import
+import { Routes, Route, useNavigate, Link } from "react-router-dom"; // Removed BrowserRouter import
 import { Col, Row } from "react-bootstrap";
 import Navbar from "../navigation-bar/navigation-bar";
 import { SignupView } from "../signup-view/signup-view";
