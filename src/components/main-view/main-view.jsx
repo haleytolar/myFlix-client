@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate, BrowserRouter, Link } from "react-router-dom";
+import { Routes, Route, Navigate, BrowserRouter, Link, useNavigate } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import Navbar from "../navigation-bar/navigation-bar";
 import { SignupView } from "../signup-view/signup-view";
@@ -18,6 +18,7 @@ export const MainView = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("All");
+  const navigate = useNavigate(); // Import useNavigate hook
 
   useEffect(() => {
     if (!token) {
@@ -83,6 +84,13 @@ export const MainView = () => {
     setFilteredMovies(filtered);
   };
 
+  // Navigate to home route ("/") after successful login
+  const handleLogin = (user, token) => {
+    setUser(user);
+    setToken(token);
+    navigate('/'); // Navigate to home route
+  };
+
   return (
     <BrowserRouter>
       <Navbar
@@ -109,10 +117,7 @@ export const MainView = () => {
               ) : (
                 <Col md={6} className="mx-auto mt-5">
                   <LoginView
-                    onLoggedIn={(user, token) => {
-                      setUser(user);
-                      setToken(token);
-                    }}
+                    onLoggedIn={handleLogin} // Pass the handleLogin function
                   />
                 </Col>
               )}
@@ -195,3 +200,4 @@ export const MainView = () => {
     </BrowserRouter>
   );
 };
+
