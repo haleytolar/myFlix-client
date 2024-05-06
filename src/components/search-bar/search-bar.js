@@ -8,6 +8,7 @@ const SearchBar = ({ searchTerm, onSearch, selectedGenre, onGenreSelect }) => {
         type="text"
         placeholder="Search movies..."
         className="my-3 mr-sm-2"
+        style={{ minWidth: "400px" }} 
         value={searchTerm}
         onChange={onSearch}
       />
