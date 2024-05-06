@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate, Link } from "react-router-dom";
+import { Routes, Route, useNavigate, Link, useLocation } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import Navbar from "../navigation-bar/navigation-bar";
 import { SignupView } from "../signup-view/signup-view";
@@ -19,6 +19,7 @@ export const MainView = () => {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("All");
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (!token) {
@@ -94,14 +95,16 @@ export const MainView = () => {
     <div>
       <Row className="align-items-center justify-content-center">
         <Col xs={12} md={6}>
-          <div className="mb-3"> {/* Add margin bottom to create space underneath */}
-            <SearchBar
-              searchTerm={searchTerm}
-              onSearch={handleSearch}
-              selectedGenre={selectedGenre}
-              onGenreSelect={handleGenreSelect}
-            />
-          </div>
+          {location.pathname === "/" && ( // Render the SearchBar only for the "/" route
+            <div className="mb-3"> {/* Add margin bottom to create space underneath */}
+              <SearchBar
+                searchTerm={searchTerm}
+                onSearch={handleSearch}
+                selectedGenre={selectedGenre}
+                onGenreSelect={handleGenreSelect}
+              />
+            </div>
+          )}
         </Col>
         <Col xs={12} md={6}>
           <Navbar
