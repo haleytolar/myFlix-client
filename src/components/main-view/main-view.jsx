@@ -91,9 +91,9 @@ export const MainView = () => {
   };
 
   return (
-    <div>
-      <Row className="align-items-center justify-content-center">
-        <Col xs={12} md={6}>
+    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+      <Row>
+        <Col>
           <SearchBar
             searchTerm={searchTerm}
             onSearch={handleSearch}
@@ -101,7 +101,7 @@ export const MainView = () => {
             onGenreSelect={handleGenreSelect}
           />
         </Col>
-        <Col xs={12} md={6}>
+        <Col>
           <Navbar
             user={user}
             onLogout={() => {
