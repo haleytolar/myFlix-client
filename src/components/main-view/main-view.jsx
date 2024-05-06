@@ -92,18 +92,16 @@ export const MainView = () => {
 
   return (
     <div>
-      <Row>
-        <Col>
-          <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
-            <SearchBar
-              searchTerm={searchTerm}
-              onSearch={handleSearch}
-              selectedGenre={selectedGenre}
-              onGenreSelect={handleGenreSelect}
-            />
-          </div>
+      <Row className="align-items-center justify-content-center">
+        <Col xs={12} md={6}>
+          <SearchBar
+            searchTerm={searchTerm}
+            onSearch={handleSearch}
+            selectedGenre={selectedGenre}
+            onGenreSelect={handleGenreSelect}
+          />
         </Col>
-        <Col>
+        <Col xs={12} md={6}>
           <Navbar
             user={user}
             onLogout={() => {
