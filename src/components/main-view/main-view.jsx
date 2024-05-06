@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate, BrowserRouter, Link, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, Link } from "react-router-dom"; // Removed BrowserRouter import
 import { Col, Row } from "react-bootstrap";
 import Navbar from "../navigation-bar/navigation-bar";
 import { SignupView } from "../signup-view/signup-view";
@@ -18,7 +18,7 @@ export const MainView = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("All");
-  const navigate = useNavigate(); // Import useNavigate hook
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!token) {
@@ -84,15 +84,14 @@ export const MainView = () => {
     setFilteredMovies(filtered);
   };
 
-  // Navigate to home route ("/") after successful login
   const handleLogin = (user, token) => {
     setUser(user);
     setToken(token);
-    navigate('/'); // Navigate to home route
+    navigate('/');
   };
 
   return (
-    <BrowserRouter>
+    <div>
       <Navbar
         user={user}
         onLogout={() => {
@@ -105,7 +104,7 @@ export const MainView = () => {
         searchTerm={searchTerm}
         onSearch={handleSearch}
         selectedGenre={selectedGenre}
-        onGenreSelect={handleGenreSelect} // Corrected
+        onGenreSelect={handleGenreSelect}
       />
       <Routes>
         <Route path="/login" element={<LoginView onLoggedIn={handleLogin} />} />
@@ -156,7 +155,7 @@ export const MainView = () => {
                       user={user}
                       token={token}
                       setUser={setUser}
-                      movies={movieBooks} // Pass the movies array
+                      movies={movieBooks}
                       onDelete={() => {
                         setUser(null);
                         setToken(null);
@@ -170,6 +169,6 @@ export const MainView = () => {
           }
         />
       </Routes>
-    </BrowserRouter>
+    </div>
   );
 };
