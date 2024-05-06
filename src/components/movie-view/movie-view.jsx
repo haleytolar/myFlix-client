@@ -66,3 +66,5 @@ export const MovieView = ({ movies }) => {
     </div>
   );
 };
+
+export default MovieView;
