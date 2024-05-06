@@ -92,16 +92,9 @@ export const MainView = () => {
 
   return (
     <div>
-      <Row>
-        <Col xs={12} md={8}> {/* Adjust the grid layout */}
-          <Navbar
-            user={user}
-            onLogout={() => {
-              setUser(null);
-              setToken(null);
-              localStorage.clear();
-            }}
-          />
+      <Row className="align-items-center justify-content-between"> {/* Add these classes */}
+        <Col xs={12} md={4}> {/* Adjust the grid layout */}
+          <h1 style={{ marginBottom: "20px", fontSize: "4em", color: "white", textAlign: "left" }}>🄼🄾🅅🄸🄴🄵🄻🄸🅇</h1>
         </Col>
         <Col xs={12} md={4}> {/* Adjust the grid layout */}
           <SearchBar
@@ -109,6 +102,16 @@ export const MainView = () => {
             onSearch={handleSearch}
             selectedGenre={selectedGenre}
             onGenreSelect={handleGenreSelect}
+          />
+        </Col>
+        <Col xs={12} md={4}> {/* Adjust the grid layout */}
+          <Navbar
+            user={user}
+            onLogout={() => {
+              setUser(null);
+              setToken(null);
+              localStorage.clear();
+            }}
           />
         </Col>
       </Row>
