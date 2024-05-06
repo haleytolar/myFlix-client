@@ -94,9 +94,6 @@ export const MainView = () => {
     <div>
       <Row className="align-items-center justify-content-between"> {/* Add these classes */}
         <Col xs={12} md={4}> {/* Adjust the grid layout */}
-          <h1 style={{ marginBottom: "20px", fontSize: "4em", color: "white", textAlign: "left" }}>🄼🄾🅅🄸🄴🄵🄻🄸🅇</h1>
-        </Col>
-        <Col xs={12} md={4}> {/* Adjust the grid layout */}
           <SearchBar
             searchTerm={searchTerm}
             onSearch={handleSearch}
