@@ -9,14 +9,14 @@ const SearchBar = ({ searchTerm, onSearch, selectedGenre, onGenreSelect }) => {
           Filter by Genre: {selectedGenre}
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item onClick={() => onGenreSelect("All")}>All</Dropdown.Item>
+          <Dropdown.Item onClick={() => onGenreSelect("All")} style={{ color: "red" }}>All</Dropdown.Item>
           <Dropdown.Item onClick={() => onGenreSelect("Action")}>
             Action
           </Dropdown.Item>
-          <Dropdown.Item onClick={() => onGenreSelect("Comedy")}>
+          <Dropdown.Item onClick={() => onGenreSelect("Comedy")} style={{ color: "red" }}>
             Comedy
           </Dropdown.Item>
-          <Dropdown.Item onClick={() => onGenreSelect("Drama")}>Drama</Dropdown.Item>
+          <Dropdown.Item onClick={() => onGenreSelect("Drama")} style={{ color: "red" }}>Drama</Dropdown.Item>
           {/* Add more genres as needed */}
         </Dropdown.Menu>
       </Dropdown>
