@@ -4,14 +4,6 @@ import { FormControl, Dropdown, ButtonGroup } from "react-bootstrap";
 const SearchBar = ({ searchTerm, onSearch, selectedGenre, onGenreSelect }) => {
   return (
     <div className="d-flex">
-      <FormControl
-        type="text"
-        placeholder="Search movies..."
-        className="my-3 mr-sm-2"
-        style={{ minWidth: "300px" }} // Corrected: Added comma after style attribute
-        value={searchTerm}
-        onChange={onSearch}
-      />
       <Dropdown as={ButtonGroup}>
         <Dropdown.Toggle variant="secondary">
           Filter by Genre: {selectedGenre}
