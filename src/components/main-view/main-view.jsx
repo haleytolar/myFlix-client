@@ -94,12 +94,14 @@ export const MainView = () => {
     <div>
       <Row className="align-items-center justify-content-center">
         <Col xs={12} md={6}>
-          <SearchBar
-            searchTerm={searchTerm}
-            onSearch={handleSearch}
-            selectedGenre={selectedGenre}
-            onGenreSelect={handleGenreSelect}
-          />
+          <div className="mb-3"> {/* Add margin bottom to create space underneath */}
+            <SearchBar
+              searchTerm={searchTerm}
+              onSearch={handleSearch}
+              selectedGenre={selectedGenre}
+              onGenreSelect={handleGenreSelect}
+            />
+          </div>
         </Col>
         <Col xs={12} md={6}>
           <Navbar
