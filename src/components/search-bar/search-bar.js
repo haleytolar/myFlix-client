@@ -3,7 +3,7 @@ import { FormControl, Dropdown, ButtonGroup } from "react-bootstrap";
 
 const SearchBar = ({ searchTerm, onSearch, selectedGenre, onGenreSelect }) => {
   return (
-    <>
+    <div className="d-flex align-items-center"> 
       <FormControl
         type="text"
         placeholder="Search movies..."
@@ -27,7 +27,7 @@ const SearchBar = ({ searchTerm, onSearch, selectedGenre, onGenreSelect }) => {
           {/* Add more genres as needed */}
         </Dropdown.Menu>
       </Dropdown>
-    </>
+    </div>
   );
 };
 
