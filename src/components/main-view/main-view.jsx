@@ -92,20 +92,26 @@ export const MainView = () => {
 
   return (
     <div>
-      <Navbar
-        user={user}
-        onLogout={() => {
-          setUser(null);
-          setToken(null);
-          localStorage.clear();
-        }}
-      />
-      <SearchBar
-        searchTerm={searchTerm}
-        onSearch={handleSearch}
-        selectedGenre={selectedGenre}
-        onGenreSelect={handleGenreSelect}
-      />
+      <Row>
+        <Col xs={12} md={8}> {/* Adjust the grid layout */}
+          <Navbar
+            user={user}
+            onLogout={() => {
+              setUser(null);
+              setToken(null);
+              localStorage.clear();
+            }}
+          />
+        </Col>
+        <Col xs={12} md={4}> {/* Adjust the grid layout */}
+          <SearchBar
+            searchTerm={searchTerm}
+            onSearch={handleSearch}
+            selectedGenre={selectedGenre}
+            onGenreSelect={handleGenreSelect}
+          />
+        </Col>
+      </Row>
       <Routes>
         <Route path="/login" element={<LoginView onLoggedIn={handleLogin} />} />
         <Route path="/signup" element={<SignupView />} />
