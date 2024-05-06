@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate, BrowserRouter, Link } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import Navbar from "../navigation-bar/navigation-bar";
+import { SignupView } from "../login-view/login-view";
+import { LoginView } from "../signup-view/signup-view";
 import ProfileView from "../profile-view/profile-view";
 import MovieCard from "../movie-card/movie-card";
 import SearchBar from "../search-bar/search-bar";
