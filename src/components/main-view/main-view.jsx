@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from "react";
-import MovieCard from "../movie-card/movie-card";
-import { LoginView } from "../login-view/login-view";
-import { SignupView } from "../signup-view/signup-view";
-import { MovieView } from "../movie-view/movie-view";
-import { Col, Row, FormControl, Dropdown, ButtonGroup } from "react-bootstrap"; // Add these imports
 import { Routes, Route, Navigate, BrowserRouter, Link } from "react-router-dom";
+import { Col, Row } from "react-bootstrap";
 import Navbar from "../navigation-bar/navigation-bar";
 import ProfileView from "../profile-view/profile-view";
+import MovieCard from "../movie-card/movie-card";
+import SearchBar from "../search-bar/search-bar";
 
 export const MainView = () => {
   const [movieBooks, setMovieBooks] = useState([]);
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
-  const [user, setUser] = useState(storedUser ? storedUser : null);
-  const [token, setToken] = useState(storedToken ? storedToken : null);
+  const [user, setUser] = useState(storedUser || null);
+  const [token, setToken] = useState(storedToken || null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("All");
@@ -91,35 +89,13 @@ export const MainView = () => {
           setToken(null);
           localStorage.clear();
         }}
-      >
-        <FormControl
-          type="text"
-          placeholder="Search movies..."
-          className="my-3 mr-sm-2"
-          value={searchTerm}
-          onChange={handleSearch}
-        />
-        <Dropdown as={ButtonGroup}>
-          <Dropdown.Toggle variant="secondary">
-            Filter by Genre: {selectedGenre}
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item onClick={() => handleGenreSelect("All")}>
-              All
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => handleGenreSelect("Action")}>
-              Action
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => handleGenreSelect("Comedy")}>
-              Comedy
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => handleGenreSelect("Drama")}>
-              Drama
-            </Dropdown.Item>
-            {/* Add more genres as needed */}
-          </Dropdown.Menu>
-        </Dropdown>
-      </Navbar>
+      />
+      <SearchBar
+        searchTerm={searchTerm}
+        onSearch={handleSearch}
+        selectedGenre={selectedGenre}
+        onGenreSelect={handleGenreSelect} // Corrected
+      />
       <Routes>
         <Route
           path="/login"
