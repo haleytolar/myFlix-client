@@ -34,5 +34,3 @@ const SearchBar = ({ searchTerm, onSearch, selectedGenre, onGenreSelect }) => {
 
 export default SearchBar;
 
-
-export default SearchBar;
