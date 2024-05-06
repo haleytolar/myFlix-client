@@ -8,9 +8,9 @@ const SearchBar = ({ searchTerm, onSearch, selectedGenre, onGenreSelect }) => {
         <Dropdown.Toggle variant="secondary">
           Filter by Genre: {selectedGenre}
         </Dropdown.Toggle>
-        <Dropdown.Menu>
+        <Dropdown.Menu style={{ paddingBottom: "10px" }}> {/* Add padding underneath */}
           <Dropdown.Item onClick={() => onGenreSelect("All")} style={{ color: "red" }}>All</Dropdown.Item>
-          <Dropdown.Item onClick={() => onGenreSelect("Action")}>
+          <Dropdown.Item onClick={() => onGenreSelect("Action")} style={{ color: "red" }}>
             Action
           </Dropdown.Item>
           <Dropdown.Item onClick={() => onGenreSelect("Comedy")} style={{ color: "red" }}>
