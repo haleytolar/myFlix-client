@@ -92,24 +92,28 @@ export const MainView = () => {
 
   return (
     <div>
-      <Row className="align-items-center justify-content-between"> {/* Add these classes */}
-        <Col xs={12} md={4}> {/* Adjust the grid layout */}
-          <SearchBar
-            searchTerm={searchTerm}
-            onSearch={handleSearch}
-            selectedGenre={selectedGenre}
-            onGenreSelect={handleGenreSelect}
-          />
-        </Col>
-        <Col xs={12} md={4}> {/* Adjust the grid layout */}
-          <Navbar
-            user={user}
-            onLogout={() => {
-              setUser(null);
-              setToken(null);
-              localStorage.clear();
-            }}
-          />
+        <Row className="align-items-center justify-content-between"> {/* Add these classes */}
+        <Col xs={12} md={6}> {/* Adjust the grid layout */}
+          <Row>
+            <Col xs={12} md={6}> {/* Adjust the grid layout */}
+              <SearchBar
+                searchTerm={searchTerm}
+                onSearch={handleSearch}
+                selectedGenre={selectedGenre}
+                onGenreSelect={handleGenreSelect}
+              />
+            </Col>
+            <Col xs={12} md={6}> {/* Adjust the grid layout */}
+              <Navbar
+                user={user}
+                onLogout={() => {
+                  setUser(null);
+                  setToken(null);
+                  localStorage.clear();
+                }}
+              />
+            </Col>
+          </Row>
         </Col>
       </Row>
       <Routes>
