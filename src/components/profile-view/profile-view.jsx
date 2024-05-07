@@ -91,7 +91,7 @@ const ProfileView = ({ user, token, setUser, onDelete, movies }) => {
       // Reset edit mode
       setIsEditing(false);
 
-      // Log the success message or perform other actions
+      // Log the success message 
       console.log("User data updated successfully");
     } catch (error) {
       console.error("Update error:", error);

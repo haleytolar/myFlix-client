@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useNavigate, Link, useLocation } from "react-router-dom"; // Import Navigate
+import { Routes, Route, Navigate, useNavigate, Link, useLocation } from "react-router-dom"; 
 import { Col, Row } from "react-bootstrap";
 import Navbar from "../navigation-bar/navigation-bar";
 import { SignupView } from "../signup-view/signup-view";
@@ -95,8 +95,8 @@ export const MainView = () => {
     <div>
       <Row className="align-items-center justify-content-center">
         <Col xs={12} md={6}>
-          {location.pathname === "/" && ( // Render the SearchBar only for the "/" route
-            <div className="mb-3"> {/* Add margin bottom to create space underneath */}
+          {location.pathname === "/" && ( 
+            <div className="mb-3"> 
               <SearchBar
                 searchTerm={searchTerm}
                 onSearch={handleSearch}
