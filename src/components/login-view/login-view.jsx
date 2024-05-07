@@ -40,7 +40,7 @@ export const LoginView = ({ onLoggedIn }) => {
   return (
     <Form onSubmit={handleSubmit} className="mt-5">
       <Form.Label style={{ color: "white", fontSize: "1.5em", fontWeight: "bold" }}>
-        Login:
+        Login
       </Form.Label>
       <Form.Group controlId="formUsername">
         <Form.Label style={{ color: "white" }}>Username:</Form.Label>
