@@ -123,7 +123,7 @@ export const MainView = () => {
           element={
             <>
               {user ? (
-                <Navigate to="/" />
+                <navigate to="/" />
               ) : (
                 <Col md={6} className="mx-auto mt-5">
                   <LoginView
