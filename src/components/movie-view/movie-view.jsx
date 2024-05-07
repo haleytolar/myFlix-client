@@ -17,7 +17,7 @@ export const MovieView = ({ movies }) => {
           alt={movie.title}
           style={{
             maxWidth: "50%",
-            maxHeight: "80vh",
+            maxHeight: "90vh",
             width: "100%",
             margin: "auto",
             border: "4px solid white",
