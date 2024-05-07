@@ -118,8 +118,36 @@ export const MainView = () => {
         </Col>
       </Row>
       <Routes>
-        <Route path="/login" element={<LoginView onLoggedIn={handleLogin} />} />
-        <Route path="/signup" element={<SignupView />} />
+      <Route
+          path="/login"
+          element={
+            <>
+              {user ? (
+                <Navigate to="/" />
+              ) : (
+                <Col md={6} className="mx-auto mt-5">
+                  <LoginView
+                    onLoggedIn={(user, token) => {
+                      setUser(user);
+                      setToken(token);
+                    }}
+                  />
+                </Col>
+              )}
+            </>
+          }
+        />
+
+        <Route
+          path="/signup"
+          element={
+            <Row className="justify-content-md-center">
+              <Col md={5} style={{ textAlign: "center", color: "white" }}>
+                <SignupView />
+              </Col>
+            </Row>
+          }
+        />
         <Route path="/movies/:movieId" element={<MovieView movies={movieBooks} />} />
         <Route
           path="/"
