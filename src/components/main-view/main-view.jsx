@@ -119,24 +119,25 @@ export const MainView = () => {
       </Row>
       <Routes>
       <Route
-          path="/login"
-          element={
-            <>
-              {user ? (
-                <navigate to="/" />
-              ) : (
-                <Col md={6} className="mx-auto mt-5">
-                  <LoginView
-                    onLoggedIn={(user, token) => {
-                      setUser(user);
-                      setToken(token);
-                    }}
-                  />
-                </Col>
-              )}
-            </>
-          }
-        />
+  path="/login"
+  element={
+    <>
+      {user ? (
+        <Navigate to="/" />  
+      ) : (
+        <Col md={6} className="mx-auto mt-5">
+          <LoginView
+            onLoggedIn={(user, token) => {
+              setUser(user);
+              setToken(token);
+            }}
+          />
+        </Col>
+      )}
+    </>
+  }
+/>
+
 
         <Route
           path="/signup"
