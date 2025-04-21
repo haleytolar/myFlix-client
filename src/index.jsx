@@ -10,7 +10,6 @@ const App = () => {
   return (
     <BrowserRouter>
       <Container style={{ textAlign: "center", padding: "20px" }}>
-        <h1 style={{ marginBottom: "20px", fontSize: "4em", color: "white" }}>🄼🄾🅅🄸🄴🄵🄻🄸🅇</h1>
         <MainView />
       </Container>
     </BrowserRouter>

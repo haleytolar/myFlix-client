@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate, Link, BrowserRouter } from "react-router-dom"; 
+import { Routes, Route, Navigate, Link } from "react-router-dom"; 
 import { Col, Row, FormControl, Container, Button } from "react-bootstrap";
 import Navbar from "../navigation-bar/navigation-bar";
 import { SignupView } from "../signup-view/signup-view";
@@ -90,144 +90,142 @@ export const MainView = () => {
   };
 
   return (
-    <BrowserRouter>
-      <div className="app-container">
-        <Navbar
-          user={user}
-          onLogout={() => {
-            setUser(null);
-            setToken(null);
-            localStorage.clear();
-          }}
+    <div className="app-container">
+      <Navbar
+        user={user}
+        onLogout={() => {
+          setUser(null);
+          setToken(null);
+          localStorage.clear();
+        }}
+      />
+      
+      <Routes>
+        <Route
+          path="/login"
+          element={!user ? <LoginView onLoggedIn={(user, token) => {
+            setUser(user);
+            setToken(token);
+          }} /> : <Navigate to="/" />}
         />
         
-        <Routes>
-          <Route
-            path="/login"
-            element={!user ? <LoginView onLoggedIn={(user, token) => {
-              setUser(user);
-              setToken(token);
-            }} /> : <Navigate to="/" />}
-          />
-          
-          <Route
-            path="/signup"
-            element={!user ? <SignupView /> : <Navigate to="/" />}
-          />
-          
-          <Route
-            path="/movies/:movieId"
-            element={
-              user ? (
-                <MovieView 
-                  movies={movieBooks} 
-                  user={user}
-                  token={token}
-                  setUser={setUser}
-                />
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
-          
-          <Route
-            path="/profile"
-            element={
-              user ? (
-                <ProfileView 
-                  user={user} 
-                  token={token}
-                  movies={movieBooks}
-                  onUserUpdate={setUser}
-                  onDelete={() => {
-                    setUser(null);
-                    setToken(null);
-                    localStorage.clear();
-                  }}
-                />
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
-          
-          <Route
-            path="/"
-            element={
-              user ? (
-                <div className="movies-page">
-                  <div className="hero-section">
-                    <div className="hero-content">
-                      <h1>Welcome to MovieFlix</h1>
-                      <p>Discover amazing movies and build your personal collection</p>
-                    </div>
+        <Route
+          path="/signup"
+          element={!user ? <SignupView /> : <Navigate to="/" />}
+        />
+        
+        <Route
+          path="/movies/:movieId"
+          element={
+            user ? (
+              <MovieView 
+                movies={movieBooks} 
+                user={user}
+                token={token}
+                setUser={setUser}
+              />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        
+        <Route
+          path="/profile"
+          element={
+            user ? (
+              <ProfileView 
+                user={user} 
+                token={token}
+                movies={movieBooks}
+                setUser={setUser}
+                onDelete={() => {
+                  setUser(null);
+                  setToken(null);
+                  localStorage.clear();
+                }}
+              />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        
+        <Route
+          path="/"
+          element={
+            user ? (
+              <div className="movies-page">
+                <div className="hero-section">
+                  <div className="hero-content">
+                    <h1>Welcome to MovieFlix</h1>
+                    <p>Discover amazing movies and build your personal collection</p>
                   </div>
+                </div>
 
-                  <Container>
-                    <div className="search-filters-container">
-                      <div className="search-container">
-                        <i className="fas fa-search search-icon"></i>
-                        <FormControl
-                          type="text"
-                          placeholder="Search movies..."
-                          className="search-input"
-                          value={searchTerm}
-                          onChange={handleSearch}
-                        />
-                      </div>
-                      
-                      <div className="genre-filters">
-                        {genres.map(genre => (
-                          <Button
-                            key={genre}
-                            variant={selectedGenre === genre ? "primary" : "outline-light"}
-                            className="genre-btn"
-                            onClick={() => handleGenreSelect(genre)}
-                          >
-                            {genre}
-                          </Button>
-                        ))}
-                      </div>
+                <Container>
+                  <div className="search-filters-container">
+                    <div className="search-container">
+                      <i className="fas fa-search search-icon"></i>
+                      <FormControl
+                        type="text"
+                        placeholder="Search movies..."
+                        className="search-input"
+                        value={searchTerm}
+                        onChange={handleSearch}
+                      />
                     </div>
                     
-                    {isLoading ? (
-                      <div className="loading-container">
-                        <div className="loader"></div>
-                        <p>Loading movies...</p>
-                      </div>
-                    ) : filteredMovies.length > 0 ? (
-                      <Row className="movie-grid">
-                        {filteredMovies.map((movie) => (
-                          <Col className="movie-column" key={movie.id} sm={6} md={4} lg={3}>
-                            <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>
-                              <MovieCard
-                                movie={movie}
-                                user={user}
-                                token={token}
-                                setUser={setUser}
-                              />
-                            </Link>
-                          </Col>
-                        ))}
-                      </Row>
-                    ) : (
-                      <div className="no-results">
-                        <i className="fas fa-film no-results-icon"></i>
-                        <h3>No movies found</h3>
-                        <p>Try adjusting your search or filters</p>
-                      </div>
-                    )}
-                  </Container>
-                </div>
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
-        </Routes>
-      </div>
-    </BrowserRouter>
+                    <div className="genre-filters">
+                      {genres.map(genre => (
+                        <Button
+                          key={genre}
+                          variant={selectedGenre === genre ? "primary" : "outline-light"}
+                          className="genre-btn"
+                          onClick={() => handleGenreSelect(genre)}
+                        >
+                          {genre}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {isLoading ? (
+                    <div className="loading-container">
+                      <div className="loader"></div>
+                      <p>Loading movies...</p>
+                    </div>
+                  ) : filteredMovies.length > 0 ? (
+                    <Row className="movie-grid">
+                      {filteredMovies.map((movie) => (
+                        <Col className="movie-column" key={movie.id} sm={6} md={4} lg={3}>
+                          <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>
+                            <MovieCard
+                              movie={movie}
+                              user={user}
+                              token={token}
+                              setUser={setUser}
+                            />
+                          </Link>
+                        </Col>
+                      ))}
+                    </Row>
+                  ) : (
+                    <div className="no-results">
+                      <i className="fas fa-film no-results-icon"></i>
+                      <h3>No movies found</h3>
+                      <p>Try adjusting your search or filters</p>
+                    </div>
+                  )}
+                </Container>
+              </div>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+      </Routes>
+    </div>
   );
 };
 
