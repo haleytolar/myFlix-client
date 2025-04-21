@@ -1,4 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+.profile-container {
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  padding: 40px 0;
+}
+
+.profile-card {
+  background-color: #141414;
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.profile-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: white;
+  position: relative;
+  display: inline-block;
+}
+
+.profile-title:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(to right, #ff416c, #ff4b2b);
+  border-radius: 3px;
+}
+
+.form-label {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8px;
+}
+
+.form-control {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  padding: 12px 15px !important;
+  color: white !important;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.form-control:focus {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: none !important;
+}
+
+.form-control:read-only {
+  opacity: 0.7;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+  border: none !important;
+}
+
+.btn-primary {
+  background: linear-gradient(45deg, #ff416c, #ff4b2b) !important;
+  box-shadow: 0 5px 15px rgba(255, 65, 108, 0.3);
+}
+
+/* edit profile */
+.btn-info {
+  background: rgb(37, 37, 191) !important;
+  box-shadow: 0 5px 15px rgba(58, 123, 213, 0.3);
+}
+
+/* delete profile */
+.btn-danger {
+  background: #dd1818 !important;
+  box-shadow: 0 5px 15px rgba(221, 24, 24, 0.3);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.favorites-section {
+  background-color: #141414;
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.favorite-movies-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
 .favorite-movies-container .col {
-    margin-bottom: 20px; /* Adjust this value as needed */
+  width: 100%;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  position: relative;
+  padding-left: 15px;
+  color: white;
+}
+
+.section-title:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, #ff416c, #ff4b2b);
+  border-radius: 2px;
+}
+
+.no-favorites {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.no-favorites i {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.no-favorites p {
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
+/* moblies */
+@media (max-width: 991px) {
+  .profile-card, .favorites-section {
+    padding: 25px;
   }
   
+  .favorite-movies-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .favorite-movies-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .favorite-movies-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  
+  .btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

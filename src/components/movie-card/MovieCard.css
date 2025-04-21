@@ -1,16 +1,152 @@
-/* MovieCard.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-.custom-card-title,
-.custom-card-text {
-  text-decoration: none !important;
+/* card and icon */
+.movie-card-wrapper {
+  position: relative;
+  margin-bottom: 20px;
+  border-radius: 10px;
 }
 
-.title {
-  white-space: nowrap;
+/* Heart icon */
+.heart-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 100;
+  width: 30px;
+  height: 30px;
+}
+
+.heart-btn {
+  width: 100%;
+  height: 100%;
+  font-size: 24px;
+  line-height: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.heart-btn:hover {
+  transform: scale(1.2);
+}
+
+.heart-btn.favorite {
+  color: #ff416c;
+  text-shadow: 0 0 5px rgba(255, 65, 108, 0.4);
+}
+
+/* Movie card */
+.movie-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.movie-card {
+  background-color: #141414;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.movie-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Img container */
+.poster-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 150%; 
+  overflow: hidden;
+}
+
+.poster-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.movie-card:hover .poster-img {
+  transform: scale(1.05);
+}
+
+.hover-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 15px;
+  color: white;
+}
+
+.hover-overlay h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.hover-overlay .director {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+
+.hover-overlay .description {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  line-height: 1.4;
+}
+
+.title-bar {
+  padding: 12px;
+  text-align: center;
+}
+
+.title-bar h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: white;
+  margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.3;
 }
 
-.remove-btn {
-  color: red; /* Set the text color to red */
+@media (max-width: 767px) {
+  .heart-icon {
+    top: 5px;
+    right: 5px;
+  }
+  
+  .title-bar {
+    padding: 10px;
+  }
+  
+  .title-bar h4 {
+    font-size: 0.85rem;
+  }
 }

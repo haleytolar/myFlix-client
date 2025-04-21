@@ -1,97 +1,120 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Card, Button } from "react-bootstrap";
-import "./MovieCard.css";
+import "./MovieCard.scss";
 
-const MovieCard = ({
-  movie,
-  user,
-  token,
-  setUser,
-}) => {
+const MovieCard = ({ movie, user, token, setUser }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
+  // Check if movie is in user's favorites
   useEffect(() => {
-    setIsFavorite(user && user.FavoriteMovies && user.FavoriteMovies.includes(movie.id));
+    if (user && user.FavoriteMovies && movie.id) {
+      setIsFavorite(user.FavoriteMovies.includes(movie.id));
+    }
   }, [user, movie.id]);
 
-  const handleAddFavoriteMovie = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await fetch(`https://movieflix-87lf.onrender.com/users/${user.Username}/movies/${movie.id}`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (!response.ok) {
-        throw new Error("Failed to add to favorites");
-      }
-      const updatedUser = await response.json();
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      setUser(updatedUser);
+  // Add to favorites
+  const handleAddFavorite = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (!user || !token) return;
+    
+    fetch(`https://movieflix-87lf.onrender.com/users/${user.Username}/movies/${movie.id}`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(response => {
+      if (!response.ok) throw new Error("Failed to add");
+      return response.json();
+    })
+    .then(data => {
+      localStorage.setItem("user", JSON.stringify(data));
+      setUser(data);
       setIsFavorite(true);
-      alert("Successfully added to favorites");
-    } catch (error) {
-      console.error("Error adding to favorites:", error);
-      alert("Failed to add to favorites");
-    }
+    })
+    .catch(error => console.error(error));
   };
 
-  const handleRemoveFavoriteMovie = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await fetch(`https://movieflix-87lf.onrender.com/users/${user.Username}/movies/${movie.id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (!response.ok) {
-        throw new Error("Failed to remove from favorites");
-      }
-      const updatedUser = await response.json();
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      setUser(updatedUser);
+  // Remove from favorites
+  const handleRemoveFavorite = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (!user || !token) return;
+    
+    fetch(`https://movieflix-87lf.onrender.com/users/${user.Username}/movies/${movie.id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(response => {
+      if (!response.ok) throw new Error("Failed to remove");
+      return response.json();
+    })
+    .then(data => {
+      localStorage.setItem("user", JSON.stringify(data));
+      setUser(data);
       setIsFavorite(false);
-      alert("Successfully removed from favorites");
-    } catch (error) {
-      console.error("Error removing from favorites:", error);
-      alert("Failed to remove from favorites");
-    }
+    })
+    .catch(error => console.error(error));
   };
 
   return (
-    <Link to={`/movies/${movie.id}`} className="custom-card-title">
-      <Card className="movie-card" style={{
-          cursor: 'pointer',
-          backgroundColor: 'white',
-          border: '4px solid white',
-        }}>
-        <Card.Img variant="top" src={movie.imagePath} />
-        <Card.Body>
-          <Card.Title style={{ fontSize: '1rem' }}>{movie.title}</Card.Title>
-          <Card.Text style={{ fontSize: '0.8rem' }}>{movie.director.directorName}</Card.Text>
-        </Card.Body>
-        {user && (
-          <div className="mt-auto">
-            <Button
-              variant={isFavorite ? "danger" : "primary"}
-              className="favorite-btn"
-              onClick={isFavorite ? handleRemoveFavoriteMovie : handleAddFavoriteMovie}
-              style={{ backgroundColor: isFavorite ? "red" : "", color: isFavorite ? "white" : "", marginBottom: "10px" }}
-            >
-              {isFavorite ? "Remove Favorite" : "Add Favorite"}
-            </Button>
+    <div className="movie-card-wrapper">
+      {user && (
+        <div className="heart-icon">
+          {isFavorite ? (
+            <button onClick={handleRemoveFavorite} className="heart-btn favorite">
+              ♥
+            </button>
+          ) : (
+            <button onClick={handleAddFavorite} className="heart-btn">
+              ♡
+            </button>
+          )}
+        </div>
+      )}
+      
+      
+      <Link to={`/movies/${movie.id}`} className="movie-link">
+        <div 
+          className="movie-card" 
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div className="poster-wrap">
+            <img 
+              src={movie.imagePath} 
+              alt={movie.title} 
+              className="poster-img" 
+            />
+            
+            {isHovered && (
+              <div className="hover-overlay">
+                <h3>{movie.title}</h3>
+                <p className="director">Director: {movie.director.directorName}</p>
+                {movie.description && (
+                  <p className="description">{movie.description.substring(0, 100)}...</p>
+                )}
+              </div>
+            )}
           </div>
-        )}
-      </Card>
-    </Link>
+          
+          <div className="title-bar">
+            <h4>{movie.title}</h4>
+          </div>
+        </div>
+      </Link>
+    </div>
   );
 };
 
 MovieCard.propTypes = {
   movie: PropTypes.object.isRequired,
   user: PropTypes.object,
-  token: PropTypes.string.isRequired,
-  setUser: PropTypes.func.isRequired
+  token: PropTypes.string,
+  setUser: PropTypes.func
 };
 
 export default MovieCard;
