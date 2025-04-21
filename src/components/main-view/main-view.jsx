@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import MovieCard from "../movie-card/movie-card";
-import { LoginView } from "../login-view/login-view";
-import { SignupView } from "../signup-view/signup-view";
-import { MovieView } from "../movie-view/movie-view";
+import { Routes, Route, Navigate, Link, BrowserRouter } from "react-router-dom"; 
 import { Col, Row, FormControl, Container, Button } from "react-bootstrap";
-import { Routes, Route, Navigate, BrowserRouter, Link } from "react-router-dom";
 import Navbar from "../navigation-bar/navigation-bar";
+import { SignupView } from "../signup-view/signup-view";
+import { LoginView } from "../login-view/login-view";
 import ProfileView from "../profile-view/profile-view";
+import MovieCard from "../movie-card/movie-card";
+import { MovieView } from "../movie-view/movie-view";
 import "./main-view.scss";
 
 export const MainView = () => {
@@ -140,6 +140,11 @@ export const MainView = () => {
                   token={token}
                   movies={movieBooks}
                   onUserUpdate={setUser}
+                  onDelete={() => {
+                    setUser(null);
+                    setToken(null);
+                    localStorage.clear();
+                  }}
                 />
               ) : (
                 <Navigate to="/login" replace />
@@ -186,7 +191,6 @@ export const MainView = () => {
                       </div>
                     </div>
                     
-
                     {isLoading ? (
                       <div className="loading-container">
                         <div className="loader"></div>
@@ -196,12 +200,14 @@ export const MainView = () => {
                       <Row className="movie-grid">
                         {filteredMovies.map((movie) => (
                           <Col className="movie-column" key={movie.id} sm={6} md={4} lg={3}>
-                            <MovieCard
-                              movie={movie}
-                              user={user}
-                              token={token}
-                              setUser={setUser}
-                            />
+                            <Link to={`/movies/${movie.id}`} style={{ textDecoration: "none" }}>
+                              <MovieCard
+                                movie={movie}
+                                user={user}
+                                token={token}
+                                setUser={setUser}
+                              />
+                            </Link>
                           </Col>
                         ))}
                       </Row>
